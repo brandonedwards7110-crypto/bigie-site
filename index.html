@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bigie</title>
+<style>
+  :root {
+    --bg: #0a0812; --surface: #14101f; --border: #2c2444;
+    --text: #f1ecf8; --text-muted: #a297bd; --text-faint: #6b5f88;
+    --purple: #8b5fe0; --purple-deep: #4a2f8a; --purple-glow: #3a2266;
+    --rose: #cf9186; --bigie-red: #d8455a; --system-green: #3aa66d;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 100%; padding: 40px 24px; text-align: center;
+  }
+  .wordmark { font-family: Didot, "Bodoni MT", "Playfair Display", Georgia, serif; letter-spacing: 0.08em; font-size: 2.4rem; font-weight: 500; margin: 0 0 6px; }
+  .tag { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 8px; }
+  .rule { width: 46px; height: 2px; background: var(--bigie-red); margin: 0 0 46px; }
+
+  .orb-wrap { position: relative; width: 190px; height: 190px; margin-bottom: 40px; }
+  .orb-ring { position: absolute; inset: 0; border-radius: 50%; border: 1px solid var(--purple-deep); opacity: 0.5; }
+  .orb-ring.r2 { inset: 18px; opacity: 0.35; animation: pulse 2.6s ease-in-out infinite; border-color: var(--purple); }
+  .orb-ring.r3 { inset: 36px; opacity: 0.85; border-color: var(--rose); border-style: dashed; }
+  @keyframes pulse { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.55; } }
+  @media (prefers-reduced-motion: reduce) { .orb-ring.r2 { animation: none; opacity: 0.35; } }
+  .orb-core {
+    position: absolute; inset: 44px; border-radius: 50%;
+    background: radial-gradient(circle at 42% 38%, #a97cf0 0%, var(--purple) 30%, var(--purple-deep) 62%, var(--purple-glow) 100%);
+    box-shadow: 0 0 50px 8px rgba(139,95,224,0.35);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .orb-core span { font-family: Didot, Georgia, serif; letter-spacing: 0.08em; font-size: 0.85rem; color: rgba(255,255,255,0.85); }
+
+  .status { font-family: ui-monospace, "SF Mono", monospace; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--system-green); margin-bottom: 28px; }
+  h1 { font-size: clamp(1.4rem, 4vw, 1.9rem); font-weight: 650; margin: 0 0 14px; max-width: 26ch; text-wrap: balance; }
+  p.sub { color: var(--text-muted); font-size: 1rem; line-height: 1.6; max-width: 42ch; margin: 0; }
+
+  footer { position: absolute; bottom: 28px; color: var(--text-faint); font-size: 0.75rem; letter-spacing: 0.04em; }
+  @media (max-width: 480px) {
+    .orb-wrap { width: 140px; height: 140px; margin-bottom: 30px; }
+    .orb-core { inset: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wordmark">BIGIE</div>
+<div class="tag">Your right hand, not another chatbot</div>
+<div class="rule"></div>
+
+<div class="orb-wrap">
+  <div class="orb-ring"></div>
+  <div class="orb-ring r2"></div>
+  <div class="orb-ring r3"></div>
+  <div class="orb-core"><span>BIGIE</span></div>
+</div>
+
+<div class="status">&#9679; coming soon</div>
+<h1>An AI assistant that actually remembers you.</h1>
+<p class="sub">Real memory, real honesty, no confidently-wrong answers just to have an answer. Built to be your right hand, not another chatbot.</p>
+
+<footer>bigie.us</footer>
+
+</body>
+</html>
