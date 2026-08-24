@@ -42,9 +42,15 @@
   h1 { font-size: clamp(1.4rem, 4vw, 1.9rem); font-weight: 650; margin: 0 0 14px; max-width: 26ch; text-wrap: balance; }
   p.sub { color: var(--text-muted); font-size: 1rem; line-height: 1.6; max-width: 42ch; margin: 0; }
 
+  .options { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: 34px; }
   .login-link {
-    display: inline-block; margin-top: 30px; background: var(--purple); color: #fff;
+    display: inline-block; background: var(--purple); color: #fff;
     text-decoration: none; border-radius: 999px; padding: 13px 30px; font-size: 0.96rem; font-weight: 650;
+  }
+  .login-link .small { display: block; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.75; margin-bottom: 2px; }
+  .login-link.secondary {
+    background: transparent; color: var(--text-muted); border: 0.5px solid var(--border);
+    padding: 12px 26px; font-weight: 500;
   }
   footer { position: absolute; bottom: 28px; color: var(--text-faint); font-size: 0.75rem; letter-spacing: 0.04em; }
   @media (max-width: 480px) {
@@ -66,11 +72,14 @@
   <div class="orb-core"><span>BIGIE</span></div>
 </div>
 
-<div class="status">&#9679; coming soon</div>
+<div class="status">&#9679; live now</div>
 <h1>An AI assistant that actually remembers you.</h1>
 <p class="sub">Real memory, real honesty, no confidently-wrong answers just to have an answer. Built to be your right hand, not another chatbot.</p>
 
-<a class="login-link" href="https://app.bigie.us/">Log In</a>
+<div class="options">
+  <a class="login-link" href="https://lite.bigie.us/"><span class="small">Available now</span>Log in to Bigie Lite</a>
+  <a class="login-link secondary" href="https://app.bigie.us/">Log in Bigie</a>
+</div>
 
 <footer>bigie.us</footer>
 
