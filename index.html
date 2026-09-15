@@ -4,81 +4,120 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bigie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0812; --surface: #14101f; --border: #2c2444;
-    --text: #f1ecf8; --text-muted: #a297bd; --text-faint: #6b5f88;
-    --purple: #8b5fe0; --purple-deep: #4a2f8a; --purple-glow: #3a2266;
-    --rose: #cf9186; --bigie-red: #d8455a; --system-green: #3aa66d;
+    --board: #16241b; --board-deep: #0e1912; --chalk: #f2f0e6; --chalk-dim: #c9cabb;
+    --purple: #8b5fe0; --rose: #cf9186; --gold: #e0c26f; --teal: #7fc9b8;
   }
   * { box-sizing: border-box; }
   html, body { height: 100%; margin: 0; }
   body {
-    background: var(--bg); color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+    background:
+      radial-gradient(circle at 20% 30%, rgba(255,255,255,0.025) 0, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(255,255,255,0.02) 0, transparent 45%),
+      radial-gradient(circle at 55% 15%, rgba(255,255,255,0.018) 0, transparent 35%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.008) 0 1px, transparent 1px 3px),
+      linear-gradient(160deg, var(--board) 0%, var(--board-deep) 100%);
+    color: var(--chalk);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     -webkit-font-smoothing: antialiased;
+    min-height: 100%;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    min-height: 100%; padding: 40px 24px; text-align: center;
+    padding: 90px 24px 50px; text-align: center;
   }
-  .wordmark { font-family: Didot, "Bodoni MT", "Playfair Display", Georgia, serif; letter-spacing: 0.08em; font-size: 2.4rem; font-weight: 500; margin: 0 0 6px; }
-  .tag { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 8px; }
-  .rule { width: 46px; height: 2px; background: var(--bigie-red); margin: 0 0 46px; }
+  .caveat { font-family: "Caveat", cursive; }
 
-  .orb-wrap { position: relative; width: 190px; height: 190px; margin-bottom: 40px; }
-  .orb-ring { position: absolute; inset: 0; border-radius: 50%; border: 1px solid var(--purple-deep); opacity: 0.5; }
-  .orb-ring.r2 { inset: 18px; opacity: 0.35; animation: pulse 2.6s ease-in-out infinite; border-color: var(--purple); }
-  .orb-ring.r3 { inset: 36px; opacity: 0.85; border-color: var(--rose); border-style: dashed; }
-  @keyframes pulse { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.55; } }
-  @media (prefers-reduced-motion: reduce) { .orb-ring.r2 { animation: none; opacity: 0.35; } }
-  .orb-core {
-    position: absolute; inset: 44px; border-radius: 50%;
-    background: radial-gradient(circle at 42% 38%, #a97cf0 0%, var(--purple) 30%, var(--purple-deep) 62%, var(--purple-glow) 100%);
-    box-shadow: 0 0 50px 8px rgba(139,95,224,0.35);
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 10;
     display: flex; align-items: center; justify-content: center;
+    padding: 22px 26px;
   }
-  .orb-core span { font-family: Didot, Georgia, serif; letter-spacing: 0.08em; font-size: 0.85rem; color: rgba(255,255,255,0.85); }
+  .nav-brand { font-family: "Caveat", cursive; font-size: 1.5rem; font-weight: 700; color: var(--chalk-dim); letter-spacing: 0.02em; }
 
-  .status { font-family: ui-monospace, "SF Mono", monospace; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--system-green); margin-bottom: 28px; }
-  h1 { font-size: clamp(1.4rem, 4vw, 1.9rem); font-weight: 650; margin: 0 0 14px; max-width: 26ch; text-wrap: balance; }
-  p.sub { color: var(--text-muted); font-size: 1rem; line-height: 1.6; max-width: 42ch; margin: 0; }
+  .hero-title {
+    font-family: "Caveat", cursive; font-weight: 700; color: var(--chalk);
+    font-size: clamp(4rem, 15vw, 8rem); line-height: 0.85; margin: 0;
+    text-shadow: 0 0 1px rgba(242,240,230,0.4), 0 0 22px rgba(242,240,230,0.08);
+    transform: rotate(-1.5deg);
+  }
+  .hero-sub {
+    font-family: "Caveat", cursive; font-weight: 600; color: var(--chalk-dim);
+    font-size: clamp(1.2rem, 3vw, 1.7rem); margin: 2px 0 0; transform: rotate(-0.8deg);
+  }
 
-  .options { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: 34px; }
-  .login-link {
-    display: inline-block; background: var(--purple); color: #fff;
-    text-decoration: none; border-radius: 999px; padding: 13px 30px; font-size: 0.96rem; font-weight: 650;
+  /* Hand-drawn chalk boxes -- irregular rounded corners + independent
+     rotation per box so nothing lines up too perfectly, plus a rough
+     double-stroke border to read as chalk, not a UI component. */
+  .doors {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px 26px;
+    max-width: 640px; width: 100%; margin: 56px auto 0;
   }
-  .login-link .small { display: block; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.75; margin-bottom: 2px; }
-  .login-link.secondary {
-    background: transparent; color: var(--text-muted); border: 0.5px solid var(--border);
-    padding: 12px 26px; font-weight: 500;
+  @media (min-width: 700px) {
+    .doors { grid-template-columns: repeat(4, 1fr); max-width: 980px; }
   }
-  footer { position: absolute; bottom: 28px; color: var(--text-faint); font-size: 0.75rem; letter-spacing: 0.04em; }
-  @media (max-width: 480px) {
-    .orb-wrap { width: 140px; height: 140px; margin-bottom: 30px; }
-    .orb-core { inset: 32px; }
+  .door {
+    position: relative; text-decoration: none; color: var(--chalk);
+    padding: 30px 16px 24px; min-height: 120px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+    border: 2px solid var(--door-color, var(--chalk));
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .door::before {
+    content: ''; position: absolute; inset: 5px;
+    border: 1px solid var(--door-color, var(--chalk)); opacity: 0.35;
+    border-radius: 15px 225px 15px 255px / 225px 15px 255px 15px;
+    pointer-events: none;
+  }
+  .door:hover { background: rgba(242,240,230,0.05); transform: scale(1.03); }
+  .door:nth-child(1) { --door-color: var(--purple); transform: rotate(-2deg); }
+  .door:nth-child(2) { --door-color: var(--teal); transform: rotate(1.3deg); }
+  .door:nth-child(3) { --door-color: var(--rose); transform: rotate(-1deg); }
+  .door:nth-child(4) { --door-color: var(--gold); transform: rotate(1.8deg); }
+  .door:hover:nth-child(1) { transform: rotate(-2deg) scale(1.04); }
+  .door:hover:nth-child(2) { transform: rotate(1.3deg) scale(1.04); }
+  .door:hover:nth-child(3) { transform: rotate(-1deg) scale(1.04); }
+  .door:hover:nth-child(4) { transform: rotate(1.8deg) scale(1.04); }
+  .door-label { font-family: "Caveat", cursive; font-weight: 700; font-size: 1.8rem; line-height: 1; }
+  .door-tag {
+    font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--chalk-dim); opacity: 0.8;
+  }
+  .door-tag.live { color: #8fe0a8; }
+
+  footer {
+    margin-top: 60px; color: rgba(242,240,230,0.35); font-size: 0.78rem; letter-spacing: 0.04em;
   }
 </style>
 </head>
 <body>
 
-<div class="wordmark">BIGIE</div>
-<div class="tag">Your right hand, not another chatbot</div>
-<div class="rule"></div>
+<nav>
+  <span class="nav-brand">powered by bigie</span>
+</nav>
 
-<div class="orb-wrap">
-  <div class="orb-ring"></div>
-  <div class="orb-ring r2"></div>
-  <div class="orb-ring r3"></div>
-  <div class="orb-core"><span>BIGIE</span></div>
-</div>
+<h1 class="hero-title">BIGIE</h1>
+<p class="hero-sub">everything, in one place</p>
 
-<div class="status">&#9679; live now</div>
-<h1>An AI assistant that actually remembers you.</h1>
-<p class="sub">Real memory, real honesty, no confidently-wrong answers just to have an answer. Built to be your right hand, not another chatbot.</p>
-
-<div class="options">
-  <a class="login-link" href="https://lite.bigie.us/"><span class="small">Available now</span>Log in to Bigie Lite</a>
-  <a class="login-link secondary" href="https://app.bigie.us/">Log in Bigie</a>
+<div class="doors">
+  <a class="door" href="https://app.bigie.us/">
+    <span class="door-label">Bigie</span>
+    <span class="door-tag live">Live now</span>
+  </a>
+  <a class="door" href="https://lite.bigie.us/">
+    <span class="door-label">Bigie Lite</span>
+    <span class="door-tag live">Live now</span>
+  </a>
+  <a class="door" href="https://carriders.bigie.us/">
+    <span class="door-label">Car Riders</span>
+    <span class="door-tag">School pickup</span>
+  </a>
+  <a class="door" href="/web-design/">
+    <span class="door-label">Web Design</span>
+    <span class="door-tag">Real sites, built</span>
+  </a>
 </div>
 
 <footer>bigie.us</footer>
