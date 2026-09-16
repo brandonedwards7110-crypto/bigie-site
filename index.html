@@ -4,140 +4,167 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bigie's Venture Studio</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --board-deep: #0e1912; --chalk: #f2f0e6; --chalk-dim: #c9cabb;
-  }
+  :root { --chalk: #f2f0e6; }
   * { box-sizing: border-box; }
-  html, body { height: 100%; margin: 0; }
-  body {
-    background-color: var(--board-deep);
-    color: var(--chalk);
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    -webkit-font-smoothing: antialiased;
-    min-height: 100%;
-    display: flex; flex-direction: column;
+  html, body {
+    height: 100%; margin: 0; overflow: hidden;
+    background: #000;
   }
   a { color: inherit; }
 
-  nav {
-    position: sticky; top: 0; z-index: 40; background: rgba(12,10,13,0.88); backdrop-filter: blur(6px);
-    padding: 16px 24px; display: flex; align-items: center; justify-content: space-between;
-    border-bottom: 1px solid rgba(245,241,238,0.08);
-  }
-  .nav-brand { font-family: "Caveat", cursive; font-size: 1.3rem; letter-spacing: 0.02em; text-decoration: none; }
-
-  .nav-menu { position: relative; }
-  .nav-menu-trigger { cursor: pointer; list-style: none; display: flex; align-items: center; padding: 4px; }
-  .nav-menu-trigger::-webkit-details-marker { display: none; }
-  .nav-menu-icon { display: flex; flex-direction: column; gap: 4px; width: 20px; }
-  .nav-menu-icon span { display: block; height: 2px; background: var(--chalk); border-radius: 1px; }
-  .nav-menu-panel {
-    position: absolute; top: calc(100% + 10px); right: 0; min-width: 230px;
-    background: var(--board-deep); border: 1px solid rgba(245,241,238,0.14); border-radius: 12px;
-    padding: 8px; display: flex; flex-direction: column; gap: 2px;
-    box-shadow: 0 12px 32px rgba(0,0,0,0.55); z-index: 60;
-  }
-  .nav-menu-panel a { display: block; padding: 10px 12px; border-radius: 8px; font-size: 0.88rem; text-decoration: none; color: var(--chalk); }
-  .nav-menu-panel a:hover { background: rgba(245,241,238,0.06); }
-  .nav-submenu > summary {
-    display: flex; align-items: center; justify-content: space-between; list-style: none; cursor: pointer;
-    padding: 10px 12px; border-radius: 8px; font-size: 0.88rem; color: var(--chalk);
-  }
-  .nav-submenu > summary::-webkit-details-marker { display: none; }
-  .nav-submenu > summary:hover { background: rgba(245,241,238,0.06); }
-  .nav-submenu > summary::after { content: '\203A'; color: var(--chalk-dim); transition: transform 0.15s ease; }
-  .nav-submenu[open] > summary::after { transform: rotate(90deg); }
-  .nav-submenu-panel { padding-left: 10px; display: flex; flex-direction: column; gap: 2px; margin: 2px 0 4px; }
-  .nav-submenu-panel a { font-size: 0.82rem; color: var(--chalk-dim); padding: 8px 12px; }
-  .nav-menu-divider { height: 1px; background: rgba(245,241,238,0.1); margin: 6px 4px; }
-  .nav-menu-powered { color: var(--rose, #f0a99c) !important; font-weight: 600; }
-
-  /* the chalkboard hero -- final image, everything already drawn in.
-     board-inner locks to the photo's own aspect ratio and scales to fit
-     any screen with zero cropping/distortion; the blurred copy behind it
-     fills the letterboxing instead of leaving flat dark space. */
-  .board-wrap {
-    position: relative; flex: 1; min-height: 0;
-    background-color: var(--board-deep);
-    overflow: hidden;
-  }
-  .board-wrap::before {
-    content: ''; position: absolute; inset: -30px; z-index: 0;
-    background-image: url('assets/chalkboard-hero.png');
-    background-size: cover; background-position: center; background-repeat: no-repeat;
-    filter: blur(32px) brightness(0.4) saturate(1.05);
-    transform: scale(1.15);
-  }
-  .board-inner {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    aspect-ratio: 1716 / 916;
-    width: 100%; max-width: 100%; max-height: 100%;
-    z-index: 1;
-    background-image: url('assets/chalkboard-hero.png');
-    background-size: cover; background-position: center; background-repeat: no-repeat;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  /* The chalkboard photo IS the page -- nothing above it, below it, or
+     beside it. Fills the viewport edge to edge; on a screen whose ratio
+     doesn't match the photo's own, it crops instead of letterboxing.
+     Hotspots below are positioned in JS against this image's actual
+     on-screen geometry, so they track the real crop on any size screen. */
+  .board-photo {
+    position: fixed; inset: 0;
+    width: 100vw; height: 100vh;
+    object-fit: cover; object-position: center;
+    display: block;
   }
 
-  /* Five clickable hotspots, positioned to match the drawn boxes in the
-     image itself -- invisible, no visual styling of their own, just a
-     hover cue so it's clear they're real links. */
   .hotspot {
-    position: absolute; display: block;
-    border-radius: 8%;
-    transition: background-color 0.15s ease;
+    position: fixed; display: block;
   }
   .hotspot:hover, .hotspot:focus-visible {
     background-color: rgba(242,240,230,0.08);
     outline: none;
   }
-  .hotspot-bigie       { left: 6.5%;  top: 25.4%; width: 20.5%; height: 22.9%; }
-  .hotspot-bigie-lite  { left: 33.7%; top: 25.8%; width: 21.3%; height: 22.4%; }
-  .hotspot-car-riders  { left: 7%;    top: 61.2%; width: 20.5%; height: 22.1%; }
-  .hotspot-web-design  { left: 34.1%; top: 60.7%; width: 21%;   height: 22.6%; }
 
-  footer {
-    text-align: center; padding: 16px 24px; color: rgba(245,241,238,0.35); font-size: 0.78rem;
+  /* the dropdown menu -- a small hand-drawn chalk squiggle standing in
+     for a hamburger icon, sitting right on the board itself */
+  .menu-hotspot {
+    position: fixed; display: flex; align-items: center; justify-content: center;
+    background: none; border: none; padding: 0; cursor: pointer;
   }
+  .menu-hotspot:hover .chalk-squiggle, .menu-hotspot:focus-visible .chalk-squiggle {
+    opacity: 1;
+  }
+  .chalk-squiggle { width: 70%; height: 70%; opacity: 0.88; }
+  .chalk-squiggle path {
+    fill: none; stroke: var(--chalk); stroke-width: 2.2; stroke-linecap: round;
+  }
+
+  .menu-panel {
+    position: fixed; z-index: 50;
+    min-width: 210px;
+    background: #0e1912; border: 1px solid rgba(245,241,238,0.16); border-radius: 12px;
+    padding: 8px; display: flex; flex-direction: column; gap: 2px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.55);
+  }
+  .menu-panel[hidden] { display: none; }
+  .menu-panel a {
+    display: block; padding: 10px 12px; border-radius: 8px; font-size: 0.9rem;
+    text-decoration: none; color: var(--chalk);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  .menu-panel a:hover { background: rgba(245,241,238,0.08); }
+  .menu-submenu { padding-left: 12px; display: flex; flex-direction: column; gap: 2px; }
+  .menu-submenu-label {
+    padding: 8px 12px 2px; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: #c9cabb; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  .menu-submenu a { font-size: 0.84rem; color: #c9cabb; }
+  .menu-divider { height: 1px; background: rgba(245,241,238,0.12); margin: 6px 4px; }
 </style>
 </head>
 <body>
 
-<nav>
-  <a class="nav-brand" href="/">powered by bigie</a>
-  <details class="nav-menu">
-    <summary class="nav-menu-trigger"><span class="nav-menu-icon"><span></span><span></span><span></span></span></summary>
-    <div class="nav-menu-panel">
-      <a href="https://app.bigie.us/">Bigie</a>
-      <a href="https://lite.bigie.us/">Bigie Lite</a>
-      <a href="https://carriders.bigie.us/">Car Riders</a>
-      <a href="/web-design/">Web Design</a>
-      <details class="nav-submenu">
-        <summary>Clients</summary>
-        <div class="nav-submenu-panel">
-          <a href="/web-design/elements-salon/">Elements Salon</a>
-          <a href="/web-design/made-by-madison/">Made by Madison</a>
-        </div>
-      </details>
-      <div class="nav-menu-divider"></div>
-      <a href="https://bigie.us/" class="nav-menu-powered">Powered by Bigie</a>
-    </div>
-  </details>
-</nav>
+<img class="board-photo" src="assets/chalkboard-hero.png" alt="Bigie's Venture Studio chalkboard, with Bigie, Bigie Lite, Car Riders, and Web Design each in their own drawn box">
 
-<div class="board-wrap">
-    <div class="board-inner">
-      <a class="hotspot hotspot-bigie" href="https://app.bigie.us/" aria-label="Bigie — live now"></a>
-      <a class="hotspot hotspot-bigie-lite" href="https://lite.bigie.us/" aria-label="Bigie Lite — live now"></a>
-      <a class="hotspot hotspot-car-riders" href="https://carriders.bigie.us/" aria-label="Car Riders — school pickup"></a>
-      <a class="hotspot hotspot-web-design" href="/web-design/" aria-label="Web Design — real sites, built"></a>
-    </div>
+<a class="hotspot" data-hotspot data-left="6.5" data-top="25.4" data-width="20.5" data-height="22.9"
+   href="https://app.bigie.us/" aria-label="Bigie — live now"></a>
+<a class="hotspot" data-hotspot data-left="33.7" data-top="25.8" data-width="21.3" data-height="22.4"
+   href="https://lite.bigie.us/" aria-label="Bigie Lite — live now"></a>
+<a class="hotspot" data-hotspot data-left="7" data-top="61.2" data-width="20.5" data-height="22.1"
+   href="https://carriders.bigie.us/" aria-label="Car Riders — school pickup"></a>
+<a class="hotspot" data-hotspot data-left="34.1" data-top="60.7" data-width="21" data-height="22.6"
+   href="/web-design/" aria-label="Web Design — real sites, built"></a>
+
+<button class="menu-hotspot" data-hotspot data-left="87" data-top="3.5" data-width="8" data-height="7"
+        id="menuTrigger" aria-haspopup="true" aria-expanded="false" aria-label="Menu">
+  <svg class="chalk-squiggle" viewBox="0 0 40 30">
+    <path d="M2,5 Q10,2 18,5 T34,4" />
+    <path d="M2,15 Q11,18 19,15 T35,16" />
+    <path d="M2,25 Q10,22 18,25 T34,24" />
+  </svg>
+</button>
+
+<div class="menu-panel" id="menuPanel" hidden>
+  <a href="https://app.bigie.us/">Bigie</a>
+  <a href="https://lite.bigie.us/">Bigie Lite</a>
+  <a href="https://carriders.bigie.us/">Car Riders</a>
+  <a href="/web-design/">Web Design</a>
+  <div class="menu-submenu">
+    <div class="menu-submenu-label">Clients</div>
+    <a href="/web-design/elements-salon/">Elements Salon</a>
+    <a href="/web-design/made-by-madison/">Made by Madison</a>
+  </div>
 </div>
 
-<footer>bigie.us</footer>
+<script>
+  const img = document.querySelector('.board-photo');
+
+  function positionHotspots() {
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const iw = img.naturalWidth, ih = img.naturalHeight;
+    if (!iw || !ih) return;
+    const viewportRatio = vw / vh, imgRatio = iw / ih;
+    let scale, offsetX, offsetY;
+    if (viewportRatio > imgRatio) {
+      scale = vw / iw;
+      offsetX = 0;
+      offsetY = (ih * scale - vh) / 2;
+    } else {
+      scale = vh / ih;
+      offsetY = 0;
+      offsetX = (iw * scale - vw) / 2;
+    }
+    document.querySelectorAll('[data-hotspot]').forEach(el => {
+      const l = parseFloat(el.dataset.left) / 100 * iw;
+      const t = parseFloat(el.dataset.top) / 100 * ih;
+      const w = parseFloat(el.dataset.width) / 100 * iw;
+      const h = parseFloat(el.dataset.height) / 100 * ih;
+      el.style.left = (l * scale - offsetX) + 'px';
+      el.style.top = (t * scale - offsetY) + 'px';
+      el.style.width = (w * scale) + 'px';
+      el.style.height = (h * scale) + 'px';
+    });
+    positionMenuPanel();
+  }
+
+  function positionMenuPanel() {
+    const trigger = document.getElementById('menuTrigger');
+    const panel = document.getElementById('menuPanel');
+    const r = trigger.getBoundingClientRect();
+    panel.style.top = (r.bottom + 8) + 'px';
+    let left = r.right - panel.offsetWidth;
+    left = Math.max(8, Math.min(left, window.innerWidth - panel.offsetWidth - 8));
+    panel.style.left = left + 'px';
+  }
+
+  if (img.complete) positionHotspots();
+  img.addEventListener('load', positionHotspots);
+  window.addEventListener('resize', positionHotspots);
+
+  const trigger = document.getElementById('menuTrigger');
+  const panel = document.getElementById('menuPanel');
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const open = panel.hasAttribute('hidden');
+    if (open) { panel.removeAttribute('hidden'); positionMenuPanel(); }
+    else { panel.setAttribute('hidden', ''); }
+    trigger.setAttribute('aria-expanded', String(open));
+  });
+  document.addEventListener('click', (e) => {
+    if (!panel.hasAttribute('hidden') && !panel.contains(e.target) && e.target !== trigger) {
+      panel.setAttribute('hidden', '');
+      trigger.setAttribute('aria-expanded', 'false');
+    }
+  });
+</script>
 
 </body>
 </html>
