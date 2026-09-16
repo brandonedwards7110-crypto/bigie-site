@@ -7,56 +7,35 @@
 <style>
   :root { --chalk: #f2f0e6; --board-deep: #0e1912; }
   * { box-sizing: border-box; }
-  html, body { margin: 0; background: var(--board-deep); }
+  html, body {
+    height: 100%; margin: 0; overflow: hidden;
+    background: var(--board-deep);
+  }
   a { color: inherit; }
 
-  /* ---- Desktop / landscape: the chalkboard photo IS the page -- nothing
-     above it, below it, or beside it. Fills the viewport edge to edge,
-     cropping instead of letterboxing on a mismatched screen ratio.
-     Hotspots are positioned in JS against the image's actual on-screen
-     crop geometry, so they track correctly at any landscape size. ---- */
-  .desktop-layout { display: block; }
+  /* The chalkboard photo IS the page -- nothing above it, below it, or
+     beside it. Fills the viewport edge to edge; on a screen whose ratio
+     doesn't match the photo's own, it crops instead of letterboxing.
+     Hotspots below are positioned in JS against this image's actual
+     on-screen geometry, so they track the real crop on any size screen. */
   .board-photo {
     position: fixed; inset: 0;
     width: 100vw; height: 100vh;
     object-fit: cover; object-position: center;
     display: block;
   }
+
   .hotspot { position: fixed; display: block; }
   .hotspot:hover, .hotspot:focus-visible {
     background-color: rgba(242,240,230,0.08);
     outline: none;
   }
-  .menu-hotspot.desktop-trigger { position: fixed; }
 
-  /* ---- Mobile / portrait: same artwork, cropped into pieces and
-     restacked vertically instead of cropped edge-to-edge -- title on
-     top, the four boxes one after another, a horizontal chalk line,
-     then her doing 30A at the bottom. Scrolls normally; nothing here
-     needs to fit in one screen the way the desktop hero does. ---- */
-  .mobile-layout { display: none; }
-  .mobile-layout {
-    width: 100%; background: var(--board-deep);
-  }
-  .m-title-wrap { position: relative; }
-  .m-title-wrap img { display: block; width: 100%; height: auto; }
-  .m-box { display: block; }
-  .m-box img { display: block; width: 100%; height: auto; }
-  .m-divider { display: block; width: 100%; height: 22px; }
-  .m-divider path {
-    fill: none; stroke: rgba(242,240,230,0.55); stroke-width: 1.6; stroke-linecap: round;
-  }
-  .m-girl-wrap img { display: block; width: 100%; height: auto; }
-
-  /* ---- shared: the dropdown menu -- a hand-drawn chalk squiggle
-     standing in for a hamburger icon, no bar/background of its own. ---- */
+  /* the dropdown menu -- a hand-drawn chalk squiggle standing in for a
+     hamburger icon, sitting right on the board itself */
   .menu-hotspot {
-    display: flex; align-items: center; justify-content: center;
+    position: fixed; display: flex; align-items: center; justify-content: center;
     background: none; border: none; padding: 0; cursor: pointer;
-  }
-  .menu-hotspot.mobile-trigger {
-    position: fixed; top: 14px; right: 14px; width: 40px; height: 40px; z-index: 40;
-    background: rgba(14,25,18,0.55); border-radius: 10px; backdrop-filter: blur(3px);
   }
   .chalk-squiggle { width: 70%; height: 70%; opacity: 0.9; }
   .chalk-squiggle path {
@@ -83,76 +62,29 @@
     color: #c9cabb; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
   .menu-submenu a { font-size: 0.84rem; color: #c9cabb; }
-
-  /* A screen taller than it is wide (phones, most tablets in portrait)
-     gets the vertical rebuild instead of the cropped full-bleed photo. */
-  @media (max-aspect-ratio: 1/1) {
-    html, body { height: auto; overflow-x: hidden; }
-    .desktop-layout { display: none; }
-    .mobile-layout { display: block; }
-  }
-  @media (min-aspect-ratio: 1.0001/1) {
-    html, body { height: 100%; overflow: hidden; }
-  }
 </style>
 </head>
 <body>
 
-<div class="desktop-layout">
-  <img class="board-photo" src="assets/chalkboard-hero.png" alt="Bigie's Venture Studio chalkboard, with Bigie, Bigie Lite, Car Riders, and Web Design each in their own drawn box">
+<img class="board-photo" src="assets/chalkboard-hero.png" alt="Bigie's Venture Studio chalkboard, with Bigie, Bigie Lite, Car Riders, and Web Design each in their own drawn box">
 
-  <a class="hotspot" data-hotspot data-left="6.5" data-top="25.4" data-width="20.5" data-height="22.9"
-     href="https://app.bigie.us/" aria-label="Bigie — live now"></a>
-  <a class="hotspot" data-hotspot data-left="33.7" data-top="25.8" data-width="21.3" data-height="22.4"
-     href="https://lite.bigie.us/" aria-label="Bigie Lite — live now"></a>
-  <a class="hotspot" data-hotspot data-left="7" data-top="61.2" data-width="20.5" data-height="22.1"
-     href="https://carriders.bigie.us/" aria-label="Car Riders — school pickup"></a>
-  <a class="hotspot" data-hotspot data-left="34.1" data-top="60.7" data-width="21" data-height="22.6"
-     href="/web-design/" aria-label="Web Design — real sites, built"></a>
+<a class="hotspot" data-hotspot data-left="6.5" data-top="25.4" data-width="20.5" data-height="22.9"
+   href="https://app.bigie.us/" aria-label="Bigie — live now"></a>
+<a class="hotspot" data-hotspot data-left="33.7" data-top="25.8" data-width="21.3" data-height="22.4"
+   href="https://lite.bigie.us/" aria-label="Bigie Lite — live now"></a>
+<a class="hotspot" data-hotspot data-left="7" data-top="61.2" data-width="20.5" data-height="22.1"
+   href="https://carriders.bigie.us/" aria-label="Car Riders — school pickup"></a>
+<a class="hotspot" data-hotspot data-left="34.1" data-top="60.7" data-width="21" data-height="22.6"
+   href="/web-design/" aria-label="Web Design — real sites, built"></a>
 
-  <button class="menu-hotspot desktop-trigger" data-hotspot data-left="87" data-top="3.5" data-width="8" data-height="7"
-          id="menuTriggerDesktop" aria-haspopup="true" aria-expanded="false" aria-label="Menu">
-    <svg class="chalk-squiggle" viewBox="0 0 40 30">
-      <path d="M2,5 Q10,2 18,5 T34,4" />
-      <path d="M2,15 Q11,18 19,15 T35,16" />
-      <path d="M2,25 Q10,22 18,25 T34,24" />
-    </svg>
-  </button>
-</div>
-
-<div class="mobile-layout">
-  <div class="m-title-wrap">
-    <img src="assets/m-title.png" alt="Bigie's Venture Studio">
-    <button class="menu-hotspot mobile-trigger" id="menuTriggerMobile" aria-haspopup="true" aria-expanded="false" aria-label="Menu">
-      <svg class="chalk-squiggle" viewBox="0 0 40 30">
-        <path d="M2,5 Q10,2 18,5 T34,4" />
-        <path d="M2,15 Q11,18 19,15 T35,16" />
-        <path d="M2,25 Q10,22 18,25 T34,24" />
-      </svg>
-    </button>
-  </div>
-
-  <a class="m-box" href="https://app.bigie.us/" aria-label="Bigie — live now">
-    <img src="assets/m-bigie.png" alt="Bigie — live now">
-  </a>
-  <a class="m-box" href="https://lite.bigie.us/" aria-label="Bigie Lite — live now">
-    <img src="assets/m-bigie-lite.png" alt="Bigie Lite — live now">
-  </a>
-  <a class="m-box" href="https://carriders.bigie.us/" aria-label="Car Riders — school pickup">
-    <img src="assets/m-car-riders.png" alt="Car Riders — school pickup">
-  </a>
-  <a class="m-box" href="/web-design/" aria-label="Web Design — real sites, built">
-    <img src="assets/m-web-design.png" alt="Web Design — real sites, built">
-  </a>
-
-  <svg class="m-divider" viewBox="0 0 300 14" preserveAspectRatio="none">
-    <path d="M2,7 Q75,3 150,7 T298,7" />
+<button class="menu-hotspot" data-hotspot data-left="87" data-top="3.5" data-width="8" data-height="7"
+        id="menuTrigger" aria-haspopup="true" aria-expanded="false" aria-label="Menu">
+  <svg class="chalk-squiggle" viewBox="0 0 40 30">
+    <path d="M2,5 Q10,2 18,5 T34,4" />
+    <path d="M2,15 Q11,18 19,15 T35,16" />
+    <path d="M2,25 Q10,22 18,25 T34,24" />
   </svg>
-
-  <div class="m-girl-wrap">
-    <img src="assets/m-girl.png" alt="Ideas: 30A Founders Walk">
-  </div>
-</div>
+</button>
 
 <div class="menu-panel" id="menuPanel" hidden>
   <a href="https://app.bigie.us/">Bigie</a>
@@ -168,8 +100,6 @@
 
 <script>
   const img = document.querySelector('.board-photo');
-  const panel = document.getElementById('menuPanel');
-  let activeTrigger = null;
 
   function positionHotspots() {
     const vw = window.innerWidth, vh = window.innerHeight;
@@ -196,10 +126,12 @@
       el.style.width = (w * scale) + 'px';
       el.style.height = (h * scale) + 'px';
     });
-    if (activeTrigger) positionMenuPanel(activeTrigger);
+    positionMenuPanel();
   }
 
-  function positionMenuPanel(trigger) {
+  function positionMenuPanel() {
+    const trigger = document.getElementById('menuTrigger');
+    const panel = document.getElementById('menuPanel');
     const r = trigger.getBoundingClientRect();
     panel.style.top = (r.bottom + 8) + 'px';
     let left = r.right - panel.offsetWidth;
@@ -211,34 +143,20 @@
   img.addEventListener('load', positionHotspots);
   window.addEventListener('resize', positionHotspots);
 
-  function toggleMenu(trigger) {
-    const opening = panel.hasAttribute('hidden');
-    if (opening) {
-      activeTrigger = trigger;
-      panel.removeAttribute('hidden');
-      positionMenuPanel(trigger);
-    } else {
-      panel.setAttribute('hidden', '');
-    }
-    trigger.setAttribute('aria-expanded', String(opening));
-  }
-
-  const desktopTrigger = document.getElementById('menuTriggerDesktop');
-  const mobileTrigger = document.getElementById('menuTriggerMobile');
-  [desktopTrigger, mobileTrigger].forEach(trigger => {
-    trigger.addEventListener('click', (e) => {
-      e.stopPropagation();
-      toggleMenu(trigger);
-    });
+  const trigger = document.getElementById('menuTrigger');
+  const panel = document.getElementById('menuPanel');
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const open = panel.hasAttribute('hidden');
+    if (open) { panel.removeAttribute('hidden'); positionMenuPanel(); }
+    else { panel.setAttribute('hidden', ''); }
+    trigger.setAttribute('aria-expanded', String(open));
   });
   document.addEventListener('click', (e) => {
-    if (!panel.hasAttribute('hidden') && !panel.contains(e.target) && e.target !== activeTrigger) {
+    if (!panel.hasAttribute('hidden') && !panel.contains(e.target) && e.target !== trigger) {
       panel.setAttribute('hidden', '');
-      if (activeTrigger) activeTrigger.setAttribute('aria-expanded', 'false');
+      trigger.setAttribute('aria-expanded', 'false');
     }
-  });
-  window.addEventListener('scroll', () => {
-    if (!panel.hasAttribute('hidden') && activeTrigger) positionMenuPanel(activeTrigger);
   });
 </script>
 
