@@ -167,6 +167,35 @@
       offsetY = 0;
       offsetX = (iw * scale - vw) / 2;
     }
+    // Real bug, found 2026-09-17: at squarish viewports (e.g. a 1024x768
+    // landscape tablet, or a narrowed desktop window) plain object-fit:
+    // cover cropped deep enough into the wide board that the Bigie and
+    // Car Riders boxes -- and their hotspots -- landed at a negative
+    // on-screen position and became unclickable. Cap how much either
+    // edge can be cropped; past that, shrink the zoom instead and let
+    // the board-deep background show as a thin letterbox bar, and drive
+    // the image's own position/size from this same math (replacing the
+    // CSS object-fit) so it always lines up exactly with the hotspots.
+    const MAX_CROP_FRACTION = 0.02;
+    if (viewportRatio > imgRatio) {
+      const maxOffsetY = ih * MAX_CROP_FRACTION * scale;
+      if (offsetY > maxOffsetY) {
+        scale = vh / (ih * (1 - 2 * MAX_CROP_FRACTION));
+        offsetX = (iw * scale - vw) / 2;
+        offsetY = ih * MAX_CROP_FRACTION * scale;
+      }
+    } else {
+      const maxOffsetX = iw * MAX_CROP_FRACTION * scale;
+      if (offsetX > maxOffsetX) {
+        scale = vw / (iw * (1 - 2 * MAX_CROP_FRACTION));
+        offsetY = (ih * scale - vh) / 2;
+        offsetX = iw * MAX_CROP_FRACTION * scale;
+      }
+    }
+    img.style.width = (iw * scale) + 'px';
+    img.style.height = (ih * scale) + 'px';
+    img.style.left = (-offsetX) + 'px';
+    img.style.top = (-offsetY) + 'px';
     document.querySelectorAll(`[data-hotspot][data-group="${group}"]`).forEach(el => {
       const l = parseFloat(el.dataset.left) / 100 * iw;
       const t = parseFloat(el.dataset.top) / 100 * ih;

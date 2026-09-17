@@ -3,35 +3,171 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AirCon Mechanical — Draft</title>
+<title>AirCon Mechanical — Commercial &amp; Industrial HVAC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root { --board-deep: #0e1912; --chalk: #f2f0e6; --chalk-dim: #c9cabb; }
-  * { box-sizing: border-box; }
-  html, body { height: 100%; margin: 0; }
-  body {
-    background: var(--board-deep);
-    color: var(--chalk);
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    -webkit-font-smoothing: antialiased;
-    min-height: 100%;
-    display: flex; align-items: center; justify-content: center; text-align: center;
+  :root {
+    --ink: #0c1116; --steel: #16212c; --orange: #e0742f; --cream: #f2f0e6; --dim: #b9c2ca;
   }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; overflow: hidden; background: var(--ink); }
+  body { position: relative; isolation: isolate; }
+  body { font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--cream); }
   a { color: inherit; }
-  main { max-width: 420px; padding: 24px; }
-  h1 { font-family: "Caveat", cursive; font-weight: 700; font-size: 2.4rem; margin: 0 0 10px; }
-  p { color: var(--chalk-dim); font-size: 0.95rem; line-height: 1.7; margin: 0 0 24px; }
-  .nav-back { font-size: 0.85rem; color: var(--chalk-dim); text-decoration: none; }
-  .nav-back:hover { color: var(--chalk); }
+  h1, h2, .brand, nav a { font-family: "Oswald", sans-serif; }
+
+  /* Full-bleed real-photo background, no solid border ever: a heavily
+     blurred cover copy fills every edge, the real (uncropped) photo
+     sits centered on top. Swap the same real photo into both layers. */
+  .bg-blur {
+    position: fixed; inset: 0; z-index: -2;
+    background-size: cover; background-position: center;
+    filter: blur(60px) brightness(0.55) saturate(1.15);
+    transform: scale(1.2);
+    transition: background-image 0.8s ease;
+  }
+  .bg-photo {
+    position: fixed; inset: 0; z-index: -1;
+  }
+  .bg-photo img {
+    position: absolute; inset: 0; margin: auto;
+    max-width: 100%; max-height: 100%; object-fit: contain;
+    opacity: 0; transition: opacity 0.8s ease;
+  }
+  .bg-photo img.active { opacity: 1; }
+
+  .scrim { position: fixed; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(12,17,22,0.15) 0%, rgba(12,17,22,0.75) 100%); }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 10;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 32px;
+  }
+  .brand { font-size: 1.15rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; }
+  .brand span { color: var(--orange); }
+  .nav-links { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; }
+  .nav-links a {
+    text-decoration: none; font-size: 0.86rem; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--dim); padding-bottom: 4px; border-bottom: 2px solid transparent;
+  }
+  .nav-links a:hover, .nav-links a.current { color: var(--cream); border-color: var(--orange); }
+  .nav-toggle { display: none; background: none; border: 1px solid rgba(242,240,230,0.4); color: var(--cream); border-radius: 6px; padding: 8px 12px; font-size: 1.2rem; }
+
+  main {
+    position: relative; z-index: 1; height: 100%;
+    display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end;
+    padding: 0 48px 90px;
+    max-width: 760px;
+  }
+  .eyebrow { color: var(--orange); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 14px; }
+  h1 { font-size: clamp(2.2rem, 6vw, 4rem); font-weight: 700; margin: 0 0 18px; line-height: 1.05; text-transform: uppercase; }
+  main p { color: var(--dim); font-size: 1.05rem; line-height: 1.65; max-width: 52ch; margin: 0 0 30px; }
+  .cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+  .cta {
+    display: inline-block; padding: 15px 28px; font-weight: 700; text-decoration: none;
+    text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.9rem; border-radius: 2px;
+  }
+  .cta.primary { background: var(--orange); color: #1a0f06; }
+  .cta.secondary { background: transparent; border: 2px solid rgba(242,240,230,0.5); color: var(--cream); }
+
+  .dots { position: fixed; bottom: 28px; right: 32px; z-index: 10; display: flex; gap: 8px; }
+  .dots button {
+    width: 9px; height: 9px; border-radius: 50%; border: none; padding: 0;
+    background: rgba(242,240,230,0.35); cursor: pointer;
+  }
+  .dots button.active { background: var(--orange); }
+
+  @media (max-width: 820px) {
+    html, body { overflow-y: auto; height: auto; }
+    .bg-blur, .bg-photo, .scrim { position: absolute; }
+    body { min-height: 100vh; }
+    nav { position: sticky; background: var(--ink); }
+    .nav-links { display: none; }
+    .nav-toggle { display: block; margin-left: auto; }
+    main { min-height: calc(100vh - 70px); padding: 0 24px 60px; }
+    .dots { position: absolute; }
+  }
 </style>
 </head>
 <body>
+
+<div class="bg-blur" id="bgBlur"></div>
+<div class="bg-photo" id="bgPhoto"><img id="photo0" class="active" src="assets/project-1.jpg" alt=""></div>
+<div class="scrim"></div>
+
+<nav>
+  <div class="brand">AirCon <span>Mechanical</span></div>
+  <ul class="nav-links">
+    <li><a href="index.html" class="current">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">&#9776;</button>
+</nav>
+
 <main>
-  <h1>Nothing here yet</h1>
-  <p>Design work on AirCon Mechanical hasn't started. Once there's a real draft to review, it'll show up right here.</p>
-  <a class="nav-back" href="/web-design/aircon/">&larr; Back to AirCon Mechanical</a>
+  <div class="eyebrow">Commercial &amp; Industrial HVAC Construction</div>
+  <h1>New Construction. Remodels. Built Right.</h1>
+  <p>Family owned and operated since 1929. Licensed, bonded, and insured mechanical contracting for commercial and industrial projects across the Auburn/Opelika area.</p>
+  <div class="cta-row">
+    <a class="cta primary" href="projects.html">View Our Projects</a>
+    <a class="cta secondary" href="contact.html">Request a Quote</a>
+  </div>
 </main>
+
+<div class="dots" id="dots"></div>
+
+<script>
+  const photos = ["assets/project-1.jpg", "assets/project-2.jpg", "assets/project-3.jpg", "assets/project-4.jpg"];
+  const bgBlur = document.getElementById('bgBlur');
+  const bgPhoto = document.getElementById('bgPhoto');
+  const dotsEl = document.getElementById('dots');
+  let current = 0;
+  let imgEls = [document.getElementById('photo0')];
+
+  bgBlur.style.backgroundImage = `url(${photos[0]})`;
+
+  photos.forEach((src, i) => {
+    if (i === 0) return;
+    const img = document.createElement('img');
+    img.src = src;
+    bgPhoto.appendChild(img);
+    imgEls.push(img);
+  });
+
+  photos.forEach((_, i) => {
+    const b = document.createElement('button');
+    if (i === 0) b.classList.add('active');
+    b.setAttribute('aria-label', `Slide ${i + 1}`);
+    b.addEventListener('click', () => show(i));
+    dotsEl.appendChild(b);
+  });
+
+  function show(i) {
+    current = i;
+    imgEls.forEach((img, idx) => img.classList.toggle('active', idx === i));
+    bgBlur.style.backgroundImage = `url(${photos[i]})`;
+    [...dotsEl.children].forEach((d, idx) => d.classList.toggle('active', idx === i));
+  }
+
+  setInterval(() => show((current + 1) % photos.length), 5000);
+
+  document.getElementById('navToggle').addEventListener('click', () => {
+    const links = document.querySelector('.nav-links');
+    links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
+    links.style.flexDirection = 'column';
+    links.style.position = 'absolute';
+    links.style.top = '64px';
+    links.style.right = '24px';
+    links.style.background = 'var(--steel)';
+    links.style.padding = '14px 20px';
+    links.style.borderRadius = '8px';
+    links.style.gap = '14px';
+  });
+</script>
+
 </body>
 </html>
