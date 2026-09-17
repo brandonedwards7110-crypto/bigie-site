@@ -30,15 +30,26 @@
   h1 { font-family: "Caveat", cursive; font-weight: 700; font-size: clamp(2.6rem, 7vw, 3.6rem); margin: 0; }
   .loc { color: var(--chalk-dim); font-size: 0.95rem; margin: 8px 0 40px; }
 
+  .box-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 18px; text-align: left;
+  }
+  @media (max-width: 560px) { .box-row { grid-template-columns: 1fr; } }
+
   .draft-box {
     display: block; text-decoration: none; color: var(--chalk);
-    border: 1.5px dashed rgba(242,240,230,0.3); border-radius: 16px; padding: 36px 24px;
+    border: 1.5px dashed rgba(242,240,230,0.3); border-radius: 16px; padding: 32px 22px;
     transition: border-color 0.15s ease, background 0.15s ease;
+    text-align: center;
   }
   .draft-box:hover { border-color: var(--gold); background: rgba(242,240,230,0.04); }
   .lock-icon { font-size: 1.8rem; margin-bottom: 10px; display: block; }
   .draft-label { font-family: "Caveat", cursive; font-weight: 700; font-size: 1.6rem; }
   .draft-note { font-size: 0.85rem; color: var(--chalk-dim); margin-top: 8px; line-height: 1.6; }
+
+  .live-box {
+    border-style: solid; border-color: var(--gold);
+  }
+  .live-box:hover { background: rgba(224,194,111,0.08); }
 </style>
 </head>
 <body>
@@ -52,11 +63,18 @@
   <h1>Car Riders</h1>
   <div class="loc">In-house product</div>
 
-  <a class="draft-box" href="/web-design/car-riders/draft/">
-    <span class="lock-icon">&#9998;</span>
-    <span class="draft-label">Drafts</span>
-    <div class="draft-note">Design work hasn't started yet — check back once there's something to review.</div>
-  </a>
+  <div class="box-row">
+    <a class="draft-box" href="/web-design/car-riders/draft/">
+      <span class="lock-icon">&#128274;</span>
+      <span class="draft-label">Drafts</span>
+      <div class="draft-note">Password protected — internal review before anything replaces the live site.</div>
+    </a>
+    <a class="draft-box live-box" href="https://carriders.bigie.us" target="_blank" rel="noopener">
+      <span class="lock-icon">&#9889;</span>
+      <span class="draft-label">Live</span>
+      <div class="draft-note">carriders.bigie.us — the real app, already up and running.</div>
+    </a>
+  </div>
 </main>
 
 </body>
