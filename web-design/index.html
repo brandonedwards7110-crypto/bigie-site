@@ -6,92 +6,102 @@
 <title>Web Design — Bigie</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --board-deep: #0e1912; --chalk: #f2f0e6; --chalk-dim: #c9cabb;
-    --purple: #8b5fe0; --rose: #cf9186; --gold: #e0c26f;
+    --night: #0a0d12;
+    --amber: #e8a34c;
+    --amber-dim: #c98a3a;
+    --brick: #b06a54;
+    --rose: #c97b8a;
+    --cream: #f3ede2;
+    --cream-dim: #c9c2b3;
   }
   * { box-sizing: border-box; }
-  html, body { height: 100%; margin: 0; }
+  html, body { margin: 0; background: var(--night); }
   body {
-    background:
-      radial-gradient(circle at 20% 30%, rgba(255,255,255,0.025) 0, transparent 40%),
-      radial-gradient(circle at 80% 70%, rgba(255,255,255,0.02) 0, transparent 45%),
-      repeating-linear-gradient(0deg, rgba(255,255,255,0.008) 0 1px, transparent 1px 3px),
-      var(--board-deep);
-    color: var(--chalk);
+    position: relative; isolation: isolate; min-height: 100vh;
     font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    -webkit-font-smoothing: antialiased;
-    min-height: 100%;
+    color: var(--cream);
   }
-  .caveat { font-family: "Caveat", cursive; }
   a { color: inherit; }
 
+  .bg-photo {
+    position: fixed; inset: 0; z-index: -3;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: 50% 42%;
+  }
+  .scrim {
+    position: fixed; inset: 0; z-index: -2;
+    background: linear-gradient(180deg, rgba(10,13,18,0.82) 0%, rgba(10,13,18,0.75) 25%, rgba(10,13,18,0.88) 100%);
+  }
+
   nav {
-    padding: 22px 26px; display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 28px; display: flex; align-items: center; justify-content: space-between;
   }
-  .nav-brand { font-family: "Caveat", cursive; font-size: 1.4rem; color: var(--chalk-dim); text-decoration: none; }
-  .nav-back { font-size: 0.85rem; color: var(--chalk-dim); text-decoration: none; }
-  .nav-back:hover { color: var(--chalk); }
+  .nav-brand {
+    font-family: "Fraunces", Georgia, serif; font-style: italic; font-weight: 500;
+    font-size: 1.1rem; color: var(--cream-dim); text-decoration: none;
+  }
+  .nav-back { font-size: 0.85rem; color: var(--cream-dim); text-decoration: none; }
+  .nav-back:hover { color: var(--amber); }
 
-  .hero { max-width: 640px; margin: 30px auto 0; padding: 20px 24px 10px; text-align: center; }
-  .hero-icon { width: 84px; height: auto; margin: 0 auto 8px; opacity: 0.92; }
-  .hero-icon rect, .hero-icon circle, .hero-icon line { fill: none; stroke: var(--chalk); stroke-width: 1.6; stroke-linecap: round; }
-  .hero-icon .dot { fill: var(--chalk); stroke: none; }
-  .hero-icon .code { stroke: var(--gold); stroke-dasharray: 5 4; }
+  .hero { max-width: 640px; margin: 10px auto 0; padding: 20px 24px 10px; text-align: center; }
+  .hero-icon { width: 76px; height: auto; margin: 0 auto 10px; opacity: 0.9; }
+  .hero-icon rect, .hero-icon circle, .hero-icon line { fill: none; stroke: var(--cream); stroke-width: 1.6; stroke-linecap: round; }
+  .hero-icon .dot { fill: var(--cream); stroke: none; }
+  .hero-icon .code { stroke: var(--amber); stroke-dasharray: 5 4; }
   .hero h1 {
-    font-family: "Caveat", cursive; font-weight: 700; font-size: clamp(2.8rem, 8vw, 4.2rem);
-    margin: 0; transform: rotate(-1deg);
+    font-family: "Fraunces", Georgia, serif; font-weight: 600; font-style: italic;
+    font-size: clamp(2.4rem, 6vw, 3.2rem); margin: 0; text-wrap: balance;
   }
-  .hero p { color: var(--chalk-dim); font-size: 1rem; line-height: 1.7; max-width: 48ch; margin: 14px auto 0; }
+  .hero p { color: var(--cream-dim); font-size: 1rem; line-height: 1.7; max-width: 48ch; margin: 14px auto 0; }
 
-  /* Same hand-drawn chalk-box treatment as the homepage doors, so this
-     page reads as part of the same board instead of a plain list. */
   .roster {
-    max-width: 780px; margin: 56px auto 0; padding: 0 24px 80px;
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 24px;
+    max-width: 900px; margin: 48px auto 0; padding: 0 24px 80px;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px;
   }
   .client-card {
-    position: relative; text-decoration: none; color: var(--chalk);
-    padding: 28px 22px 24px; display: flex; flex-direction: column; gap: 8px; align-items: flex-start;
-    border: 2px solid var(--card-color, var(--chalk));
-    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
-    transition: transform 0.15s ease, background 0.15s ease;
+    position: relative; text-decoration: none; color: var(--cream);
+    background: rgba(18,22,29,0.55); backdrop-filter: blur(10px);
+    border: 1px solid rgba(243,237,226,0.16); border-radius: 14px;
+    padding: 22px 22px 20px; display: flex; flex-direction: column; gap: 6px; align-items: flex-start;
+    transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
   }
-  .client-card::before {
-    content: ''; position: absolute; inset: 5px;
-    border: 1px solid var(--card-color, var(--chalk)); opacity: 0.35;
-    border-radius: 15px 225px 15px 255px / 225px 15px 255px 15px;
-    pointer-events: none;
+  .client-card:hover {
+    transform: translateY(-3px); border-color: var(--card-accent, var(--amber));
+    background: rgba(18,22,29,0.75);
   }
-  .client-card:hover { background: rgba(242,240,230,0.05); transform: scale(1.02); }
-  .client-card:nth-child(3n+1) { --card-color: var(--purple); transform: rotate(-1.3deg); }
-  .client-card:nth-child(3n+2) { --card-color: var(--rose); transform: rotate(1deg); }
-  .client-card:nth-child(3n+3) { --card-color: var(--gold); transform: rotate(-0.8deg); }
-  .client-card:hover:nth-child(3n+1) { transform: rotate(-1.3deg) scale(1.03); }
-  .client-card:hover:nth-child(3n+2) { transform: rotate(1deg) scale(1.03); }
-  .client-card:hover:nth-child(3n+3) { transform: rotate(-0.8deg) scale(1.03); }
-  .client-name { font-family: "Caveat", cursive; font-weight: 700; font-size: 1.7rem; position: relative; z-index: 1; }
-  .client-loc { font-size: 0.82rem; color: var(--chalk-dim); position: relative; z-index: 1; }
+  .client-card:nth-child(3n+1) { --card-accent: var(--amber); }
+  .client-card:nth-child(3n+2) { --card-accent: var(--brick); }
+  .client-card:nth-child(3n+3) { --card-accent: var(--rose); }
+  .client-name { font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: 1.2rem; }
+  .client-loc { font-size: 0.82rem; color: var(--cream-dim); }
   .client-status {
-    margin-top: 6px; font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase;
-    padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(242,240,230,0.25); color: var(--chalk-dim);
-    position: relative; z-index: 1;
+    margin-top: 6px; font-size: 0.64rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 999px; border: 1px solid var(--card-accent, rgba(243,237,226,0.3));
+    color: var(--card-accent, var(--cream-dim));
+  }
+
+  @media (max-width: 480px) {
+    .roster { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 
+<img class="bg-photo" src="../assets/homepage-night-street.jpg" alt="A Southern downtown street at night under a clear starry sky, string lights spanning between the buildings">
+<div class="scrim"></div>
+
 <nav>
-  <a class="nav-brand" href="/">powered by bigie</a>
+  <a class="nav-brand" href="/">Powered By Bigie</a>
   <a class="nav-back" href="/">&larr; Home</a>
 </nav>
 
 <div class="hero">
-  <svg class="hero-icon" viewBox="0 0 100 70" role="img" aria-label="Chalk sketch of a browser window">
-    <rect x="4" y="4" width="92" height="62" rx="4" transform="rotate(-0.6 50 35)"/>
-    <line x1="4" y1="20" x2="96" y2="20" transform="rotate(-0.6 50 35)"/>
+  <svg class="hero-icon" viewBox="0 0 100 70" role="img" aria-label="Sketch of a browser window">
+    <rect x="4" y="4" width="92" height="62" rx="4"/>
+    <line x1="4" y1="20" x2="96" y2="20"/>
     <circle class="dot" cx="13" cy="12" r="2"/>
     <circle class="dot" cx="21" cy="12" r="2"/>
     <circle class="dot" cx="29" cy="12" r="2"/>
@@ -99,7 +109,7 @@
     <line class="code" x1="16" y1="44" x2="80" y2="44"/>
     <line class="code" x1="16" y1="54" x2="45" y2="54"/>
   </svg>
-  <h1 class="caveat">Web Design</h1>
+  <h1>Web Design</h1>
   <p>Real sites, built and maintained by an actual person — not a template you're stuck with. Here's who's on the board right now.</p>
 </div>
 
