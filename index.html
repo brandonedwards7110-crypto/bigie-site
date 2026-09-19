@@ -6,7 +6,7 @@
 <title>Bigie's Venture Studio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --night: #0a0d12;
@@ -54,11 +54,16 @@
     display: flex; align-items: center; justify-content: space-between;
     padding: 26px 36px;
   }
-  .brand {
-    font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: 1.5rem;
-    letter-spacing: 0.01em;
+  .brand { display: flex; flex-direction: column; line-height: 1; gap: 3px; }
+  .brand-script {
+    font-family: "Alex Brush", cursive; font-size: 2.4rem; line-height: 1;
+    color: var(--amber);
   }
-  .brand em { color: var(--amber); font-style: italic; font-weight: 500; }
+  .brand-sub {
+    font-family: "Inter", sans-serif; font-size: 0.62rem; font-weight: 600;
+    letter-spacing: 0.24em; text-transform: uppercase; color: var(--cream-dim);
+    margin-left: 3px;
+  }
 
   .menu-hotspot {
     display: flex; align-items: center; justify-content: center; gap: 8px;
@@ -161,7 +166,10 @@
 <div class="scrim-bottom"></div>
 
 <nav>
-  <div class="brand">Powered By <em>Bigie</em></div>
+  <div class="brand">
+    <span class="brand-script">Bigie's</span>
+    <span class="brand-sub">Venture Studio</span>
+  </div>
   <button class="menu-hotspot" id="menuTrigger" aria-haspopup="true" aria-expanded="false" aria-label="Menu">
     Menu
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -185,7 +193,7 @@
 
 <main>
   <div class="intro">
-    <p class="eyebrow">The Venture Studio</p>
+    <p class="eyebrow">Powered By Bigie</p>
     <h1>Agents, apps, and websites &mdash; built one venture at a time.</h1>
     <p>Every box below is its own real thing, live or on the way. No two ventures look alike on purpose.</p>
   </div>
