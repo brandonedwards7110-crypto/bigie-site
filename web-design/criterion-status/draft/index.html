@@ -222,7 +222,7 @@
       <p>A percent, a letter grade, and a plain-English read on where you stand.</p>
     </div>
     <div class="report-card">
-      <span class="report-url">criterionstatus.com/report/mainstreetcafe</span>
+      <span class="report-url">criterionstatus.com/report/bigie.us</span>
       <div class="report-grade-row">
         <span class="report-grade">B+</span>
         <div>
@@ -234,9 +234,59 @@
       <div class="report-list">
         <div class="report-row"><svg width="18" height="18" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill="#3F7D4A"/><path d="M6 10.5l2.5 2.5L14 7.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg><span class="label">Security</span><span class="status" style="color:#3F7D4A;">Pass</span></div>
         <div class="report-row"><svg width="18" height="18" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill="#C08A2E"/><path d="M6.5 10h7" stroke="white" stroke-width="2" stroke-linecap="round"/></svg><span class="label">Performance</span><span class="status" style="color:#C08A2E;">Needs work</span></div>
-        <div class="report-row"><svg width="18" height="18" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill="#B4463A"/><path d="M7 7l6 6M13 7l-6 6" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg><span class="label">Freshness</span><span class="status" style="color:#B4463A;">Fail</span></div>
+        <div class="report-row"><svg width="18" height="18" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill="#C08A2E"/><path d="M6.5 10h7" stroke="white" stroke-width="2" stroke-linecap="round"/></svg><span class="label">SEO basics</span><span class="status" style="color:#C08A2E;">Needs work</span></div>
       </div>
-      <a href="#pricing" class="unlock-link">Unlock the full breakdown — $7.99</a>
+      <button type="button" id="unlock-btn" class="unlock-link" style="background:none;border:none;border-bottom:1px solid #1F1B16;cursor:pointer;font-family:inherit;">Unlock the full breakdown — $7.99</button>
+    </div>
+
+    <div id="full-breakdown" style="display:none;width:100%;max-width:700px;margin:44px auto 0;">
+      <div style="text-align:center;display:flex;flex-direction:column;gap:8px;margin-bottom:36px;">
+        <span style="font-size:13px;color:#6B6355;letter-spacing:0.04em;">FULL BREAKDOWN — THIS IS A REAL REPORT, NOT A MOCKUP</span>
+        <h3 style="margin:0;font-family:'Fraunces',serif;font-weight:700;font-size:1.6rem;color:#1F1B16;">bigie.us — B+ · 82%</h3>
+        <p style="margin:0;font-size:14px;color:#55504A;max-width:560px;margin-left:auto;margin-right:auto;">Every finding below was actually checked against the live site, not made up for the sample.</p>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:0;">
+
+        <div style="border-top:1px solid #EFE9DC;padding:20px 0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;"><strong style="font-size:16px;color:#1F1B16;">Security</strong><span style="font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:#E7F0E8;color:#3F7D4A;">Pass — 20/20</span></div>
+          <p style="margin:10px 0 6px;font-size:15px;line-height:1.5;color:#423D35;">Served over HTTPS through Cloudflare. No mixed-content or certificate issues found.</p>
+          <p style="margin:0;font-size:14px;color:#6B6355;">Fix: none needed.</p>
+        </div>
+
+        <div style="border-top:1px solid #EFE9DC;padding:20px 0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;"><strong style="font-size:16px;color:#1F1B16;">Mobile</strong><span style="font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:#E7F0E8;color:#3F7D4A;">Pass — 20/20</span></div>
+          <p style="margin:10px 0 6px;font-size:15px;line-height:1.5;color:#423D35;">Viewport tag is set correctly, and the page actually reflows to a clean single column on a real phone-width screen — checked at 375px, no horizontal scroll or overlap.</p>
+          <p style="margin:0;font-size:14px;color:#6B6355;">Fix: none needed.</p>
+        </div>
+
+        <div style="border-top:1px solid #EFE9DC;padding:20px 0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;"><strong style="font-size:16px;color:#1F1B16;">Performance</strong><span style="font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:#FBF0DC;color:#C08A2E;">Needs work — 12/20</span></div>
+          <p style="margin:10px 0 6px;font-size:15px;line-height:1.5;color:#423D35;">The page itself is light (11KB of HTML), but the homepage's hero photo is a single 780KB JPEG with no compression or modern format applied.</p>
+          <p style="margin:0;font-size:14px;color:#6B6355;">Fix: compress and convert that hero image to WebP — a photo like this should land well under 200KB with no visible quality loss.</p>
+        </div>
+
+        <div style="border-top:1px solid #EFE9DC;padding:20px 0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;"><strong style="font-size:16px;color:#1F1B16;">SEO basics</strong><span style="font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:#FBF0DC;color:#C08A2E;">Needs work — 10/20</span></div>
+          <p style="margin:10px 0 6px;font-size:15px;line-height:1.5;color:#423D35;">Page title is present but short and generic ("Bigie's Venture Studio," 22 characters). There's no meta description at all, so Google writes its own snippet instead of the one you'd choose. No canonical tag either.</p>
+          <p style="margin:0;font-size:14px;color:#6B6355;">Fix: add a real meta description (150-160 characters, written to earn the click) and a canonical tag.</p>
+        </div>
+
+        <div style="border-top:1px solid #EFE9DC;padding:20px 0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;"><strong style="font-size:16px;color:#1F1B16;">Freshness</strong><span style="font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:#E7F0E8;color:#3F7D4A;">Pass — 20/20</span></div>
+          <p style="margin:10px 0 6px;font-size:15px;line-height:1.5;color:#423D35;">Real, recent update history — this page was actively changed today, not a site that's been sitting untouched.</p>
+          <p style="margin:0;font-size:14px;color:#6B6355;">Fix: none needed.</p>
+        </div>
+
+        <div style="border-top:1px solid #EFE9DC;border-bottom:1px solid #EFE9DC;padding:20px 0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;"><strong style="font-size:16px;color:#1F1B16;">Local standing</strong><span style="font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:#EFE9DC;color:#6B6355;">Pending</span></div>
+          <p style="margin:10px 0 6px;font-size:15px;line-height:1.5;color:#423D35;">Comparing you against other local businesses needs a real competitor data source, which isn't wired up yet.</p>
+          <p style="margin:0;font-size:14px;color:#6B6355;">Not scored — doesn't count toward the percent above.</p>
+        </div>
+
+      </div>
+
+      <p style="margin:32px 0 0;font-size:14px;line-height:1.6;color:#6B6355;max-width:560px;">One honest note: your website is real, but it's not the biggest lever. Google weighs your Business Profile (32%) and reviews (16%) more heavily than the site itself (about 19%). Fixing what's above genuinely helps — it's one real piece, not the whole picture.</p>
     </div>
   </div>
 </section>
@@ -259,6 +309,14 @@
       var placeholder = btn.getAttribute('data-placeholder');
       document.getElementById('hero-url').placeholder = placeholder;
     });
+  });
+
+  document.getElementById('unlock-btn').addEventListener('click', function () {
+    var panel = document.getElementById('full-breakdown');
+    var isHidden = panel.style.display === 'none' || !panel.style.display;
+    panel.style.display = isHidden ? 'block' : 'none';
+    this.textContent = isHidden ? 'Hide the full breakdown' : 'Unlock the full breakdown — $7.99';
+    if (isHidden) { panel.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
   });
 </script>
 
