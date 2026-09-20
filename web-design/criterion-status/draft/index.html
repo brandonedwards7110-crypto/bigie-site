@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Criterion Status — draft</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: #FAF7F0;
+    color: #231F1A;
+    font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  a { text-decoration: none; }
+  input::placeholder { color: #A39C8C; }
+  input:focus { outline: 2px solid #1F1B16; outline-offset: 2px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+  .wrap { max-width: 1200px; margin: 0 auto; }
+
+  nav { padding: 22px 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #EFE9DC; flex-wrap: wrap; gap: 14px; }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand-label { font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #1F1B16; }
+  .navlinks { display: flex; gap: 28px; flex-wrap: wrap; }
+  .navlinks a { color: #423D35; font-size: 14px; font-weight: 500; }
+  .navlinks a:hover { color: #1F1B16; }
+
+  .hero { padding: 84px 40px 64px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 22px; }
+  .hero h1 { margin: 0; font-family: "Fraunces", serif; font-weight: 700; font-size: clamp(2.4rem, 5vw, 3.75rem); line-height: 1.08; color: #1F1B16; max-width: 720px; }
+  .hero p { margin: 0; font-size: 19px; line-height: 1.55; color: #423D35; max-width: 520px; }
+
+  .check-tabs { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 6px; }
+  .tab { padding: 10px 18px; border-radius: 999px; border: 1px solid #D8D2C6; background: #FFFFFF; color: #423D35; font-size: 14px; font-weight: 500; font-family: inherit; cursor: pointer; }
+  .tab:hover { border-color: #1F1B16; }
+  .tab.active { background: #1F1B16; color: #FAF7F0; border-color: #1F1B16; }
+
+  .check-row { display: flex; gap: 12px; align-items: center; margin-top: 6px; flex-wrap: wrap; justify-content: center; }
+  .check-row input { width: 320px; max-width: 80vw; padding: 16px 20px; border-radius: 999px; border: 1px solid #D8D2C6; background: #FFFFFF; font-size: 16px; font-family: inherit; color: #231F1A; }
+  .check-row button { padding: 16px 28px; border-radius: 999px; border: none; background: #1F1B16; color: #FAF7F0; font-size: 16px; font-weight: 600; font-family: inherit; cursor: pointer; }
+  .trust { font-size: 13px; color: #6B6355; }
+
+  section { padding: 84px 40px; }
+  .band-white { background: #FFFFFF; border-top: 1px solid #EFE9DC; border-bottom: 1px solid #EFE9DC; }
+  .section-head { text-align: center; display: flex; flex-direction: column; gap: 12px; margin-bottom: 52px; }
+  .section-head h2 { margin: 0; font-family: "Fraunces", serif; font-weight: 700; font-size: 2.1rem; color: #1F1B16; }
+  .section-head p { margin: 0; font-size: 17px; color: #423D35; }
+
+  .checks-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 40px; max-width: 1100px; margin: 0 auto; }
+  .check-card { display: flex; flex-direction: column; gap: 10px; }
+  .check-card h3 { margin: 0; font-size: 17px; font-weight: 600; color: #1F1B16; }
+  .check-card p { margin: 0; font-size: 15px; line-height: 1.5; color: #55504A; }
+  .type-note { max-width: 700px; margin: 44px auto 0; text-align: center; font-size: 14px; color: #6B6355; }
+
+  .steps { display: flex; gap: 40px; justify-content: space-between; max-width: 1040px; margin: 0 auto; flex-wrap: wrap; }
+  .step { flex: 1; min-width: 200px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; }
+  .step-num { width: 40px; height: 40px; border-radius: 999px; background: #1F1B16; color: #FAF7F0; display: flex; align-items: center; justify-content: center; font-family: "Fraunces", serif; font-weight: 700; font-size: 17px; }
+  .step h3 { margin: 0; font-size: 17px; font-weight: 600; color: #1F1B16; }
+  .step p { margin: 0; font-size: 15px; line-height: 1.5; color: #55504A; max-width: 260px; }
+
+  .pricing-strip { max-width: 900px; margin: 0 auto; display: flex; justify-content: center; gap: 0; border: 1px solid #EFE9DC; border-radius: 16px; overflow: hidden; background: #FFFFFF; }
+  .price-cell { flex: 1; padding: 28px 24px; text-align: center; border-left: 1px solid #EFE9DC; }
+  .price-cell:first-child { border-left: none; }
+  .price-amount { font-family: "Fraunces", serif; font-weight: 700; font-size: 2rem; color: #1F1B16; }
+  .price-label { font-size: 13px; color: #6B6355; margin-top: 6px; }
+  .price-cell.highlight { background: #FAF3E3; }
+
+  .report-card { width: 100%; max-width: 440px; margin: 0 auto; background: #FAF7F0; border-radius: 24px; padding: 40px; box-shadow: 0 24px 48px -24px rgba(31,27,22,0.22); border: 1px solid #EFE9DC; display: flex; flex-direction: column; gap: 24px; }
+  .report-url { font-size: 12px; color: #6B6355; }
+  .report-grade-row { display: flex; align-items: baseline; gap: 20px; }
+  .report-grade { font-family: "Fraunces", serif; font-weight: 700; font-size: 88px; line-height: 1; color: #1F1B16; }
+  .report-pct { font-weight: 600; font-size: 26px; color: #C08A2E; }
+  .report-bar { width: 110px; height: 6px; border-radius: 999px; background: #EFE9DC; overflow: hidden; margin-top: 6px; }
+  .report-bar-fill { width: 82%; height: 100%; background: #C08A2E; border-radius: 999px; }
+  .report-list { display: flex; flex-direction: column; gap: 12px; }
+  .report-row { display: flex; align-items: center; gap: 12px; }
+  .report-row span.label { flex-grow: 1; font-size: 14px; color: #2E2A24; }
+  .report-row span.status { font-size: 12px; }
+  .unlock-link { display: block; text-align: center; margin-top: 32px; font-size: 14px; font-weight: 600; color: #1F1B16; border-bottom: 1px solid #1F1B16; padding-bottom: 2px; width: fit-content; margin-left: auto; margin-right: auto; }
+
+  footer { padding: 84px 40px; background: #1F1B16; color: #FAF7F0; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 24px; }
+  footer h2 { margin: 0; font-family: "Fraunces", serif; font-weight: 700; font-size: 2.25rem; }
+  footer .check-row input { background: #FAF7F0; color: #1F1B16; border: none; }
+  footer .check-row button { background: #C08A2E; color: #1F1B16; border: 1px solid #C08A2E; }
+  footer .fine { font-size: 13px; color: #B7AF9E; }
+
+  @media (max-width: 640px) {
+    .pricing-strip { flex-direction: column; }
+    .price-cell { border-left: none; border-top: 1px solid #EFE9DC; }
+    .price-cell:first-child { border-top: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="11" fill="#3F7D4A"/><path d="M6.5 11.5l3 3L15.5 8" stroke="#FAF7F0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="brand-label">Criterion Status</span>
+  </div>
+  <div class="navlinks">
+    <a href="#what-we-check">What we check</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#how-it-works">How it works</a>
+    <a href="#sample-report">Sample report</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>Know exactly where you stand.</h1>
+  <p>A plain-language grade for your online presence — six categories, one honest score, no jargon.</p>
+
+  <div class="check-tabs" role="tablist" aria-label="What to check">
+    <button type="button" class="tab active" data-placeholder="yourbusiness.com">Website</button>
+    <button type="button" class="tab" data-placeholder="facebook.com/yourbusiness">Facebook Page</button>
+    <button type="button" class="tab" data-placeholder="instagram.com/yourbusiness">Instagram Page</button>
+    <button type="button" class="tab" data-placeholder="Search your business name">Google Business Profile</button>
+  </div>
+
+  <div class="check-row">
+    <label for="hero-url" class="sr-only">What to check</label>
+    <input id="hero-url" type="text" placeholder="yourbusiness.com" />
+    <button type="button">Check it</button>
+  </div>
+  <span class="trust">Free · no credit card · results in about 10 seconds</span>
+</div>
+
+<section id="what-we-check" class="band-white">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Six checks. One honest score.</h2>
+      <p>No jargon, no vanity metrics — just what actually matters for a local business.</p>
+    </div>
+    <div class="checks-grid">
+      <div class="check-card">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 3l9 4v6c0 6-9 12-9 12S5 19 5 13V7l9-4z" stroke="#3A352E" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        <h3>Security</h3>
+        <p>HTTPS and the basic protections, checked at a glance.</p>
+      </div>
+      <div class="check-card">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="8" y="3" width="12" height="22" rx="2" stroke="#3A352E" stroke-width="1.6"/><circle cx="14" cy="21" r="1.1" fill="#3A352E"/></svg>
+        <h3>Mobile</h3>
+        <p>Does it actually work on a phone, not just a desktop.</p>
+      </div>
+      <div class="check-card">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M15 2L6 16h6l-2 10 11-16h-7l1-8z" fill="#3A352E"/></svg>
+        <h3>Performance</h3>
+        <p>Load speed, page weight, image optimization.</p>
+      </div>
+      <div class="check-card">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="11" cy="11" r="7" stroke="#3A352E" stroke-width="1.6"/><line x1="16" y1="16" x2="23" y2="23" stroke="#3A352E" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <h3>SEO basics</h3>
+        <p>Title tags, meta descriptions, whether Google can even read it.</p>
+      </div>
+      <div class="check-card">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="10" stroke="#3A352E" stroke-width="1.6"/><line x1="14" y1="14" x2="14" y2="8" stroke="#3A352E" stroke-width="1.6" stroke-linecap="round"/><line x1="14" y1="14" x2="19" y2="17" stroke="#3A352E" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <h3>Freshness</h3>
+        <p>How long since anything on the site actually changed.</p>
+      </div>
+      <div class="check-card">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 3c-4 0-7 3-7 7 0 5 7 15 7 15s7-10 7-15c0-4-3-7-7-7z" stroke="#3A352E" stroke-width="1.6" stroke-linejoin="round"/><circle cx="14" cy="10" r="2.5" stroke="#3A352E" stroke-width="1.6"/></svg>
+        <h3>Local standing</h3>
+        <p>How you stack up against other businesses near you.</p>
+      </div>
+    </div>
+    <p class="type-note">Checking a Facebook, Instagram or Google Business Profile page instead? You get checks built for that page — profile completeness, contact info, posting activity, reviews — not website checks that don't apply.</p>
+  </div>
+</section>
+
+<section id="how-it-works">
+  <div class="wrap">
+    <div class="section-head"><h2>How it works</h2></div>
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">1</span>
+        <h3>Pick what to check</h3>
+        <p>Your website, or a Facebook, Instagram or Google Business Profile page.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">2</span>
+        <h3>Verify your email</h3>
+        <p>One-time code, takes about five seconds. No password, no account.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">3</span>
+        <h3>Get your grade</h3>
+        <p>Free summary right away, or unlock the full breakdown.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" class="band-white">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>One report, or all four</h2>
+      <p>Website, Facebook, Instagram, Google Business Profile — check one or check them all.</p>
+    </div>
+    <div class="pricing-strip">
+      <div class="price-cell">
+        <div class="price-amount">$7.99</div>
+        <div class="price-label">First report</div>
+      </div>
+      <div class="price-cell">
+        <div class="price-amount">$5.99</div>
+        <div class="price-label">Each additional report</div>
+      </div>
+      <div class="price-cell highlight">
+        <div class="price-amount">$19.99</div>
+        <div class="price-label">All four, bundled</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sample-report">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>See exactly what you get</h2>
+      <p>A percent, a letter grade, and a plain-English read on where you stand.</p>
+    </div>
+    <div class="report-card">
+      <span class="report-url">criterionstatus.com/report/mainstreetcafe</span>
+      <div class="report-grade-row">
+        <span class="report-grade">B+</span>
+        <div>
+          <div class="report-pct">82%</div>
+          <div class="report-bar"><div class="report-bar-fill"></div></div>
+        </div>
+      </div>
+      <hr style="border:none;border-top:1px solid #EFE9DC;margin:0;" />
+      <div class="report-list">
+        <div class="report-row"><svg width="18" height="18" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill="#3F7D4A"/><path d="M6 10.5l2.5 2.5L14 7.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg><span class="label">Security</span><span class="status" style="color:#3F7D4A;">Pass</span></div>
+        <div class="report-row"><svg width="18" height="18" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill="#C08A2E"/><path d="M6.5 10h7" stroke="white" stroke-width="2" stroke-linecap="round"/></svg><span class="label">Performance</span><span class="status" style="color:#C08A2E;">Needs work</span></div>
+        <div class="report-row"><svg width="18" height="18" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill="#B4463A"/><path d="M7 7l6 6M13 7l-6 6" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg><span class="label">Freshness</span><span class="status" style="color:#B4463A;">Fail</span></div>
+      </div>
+      <a href="#pricing" class="unlock-link">Unlock the full breakdown — $7.99</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <h2>Find out where you really stand.</h2>
+  <div class="check-row">
+    <label for="footer-url" class="sr-only">What to check</label>
+    <input id="footer-url" type="text" placeholder="yourbusiness.com" />
+    <button type="button">Check it</button>
+  </div>
+  <span class="fine">criterionstatus.com — free forever, no account required · Privacy · Terms · Unsubscribe anytime</span>
+</footer>
+
+<script>
+  document.querySelectorAll('.tab').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.tab').forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var placeholder = btn.getAttribute('data-placeholder');
+      document.getElementById('hero-url').placeholder = placeholder;
+    });
+  });
+</script>
+
+</body>
+</html>
