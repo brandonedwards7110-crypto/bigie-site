@@ -29,11 +29,16 @@
   main { max-width: 560px; margin: 40px auto 0; padding: 0 24px 80px; text-align: center; }
   h1 { font-family: "Caveat", cursive; font-weight: 700; font-size: clamp(2.6rem, 7vw, 3.6rem); margin: 0; }
   .loc { color: var(--chalk-dim); font-size: 0.95rem; margin: 8px 0 40px; }
+  .box-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 18px; text-align: left;
+  }
+  @media (max-width: 560px) { .box-row { grid-template-columns: 1fr; } }
 
   .draft-box {
     display: block; text-decoration: none; color: var(--chalk);
     border: 1.5px dashed rgba(242,240,230,0.3); border-radius: 16px; padding: 28px 24px;
     transition: border-color 0.15s ease, background 0.15s ease;
+    text-align: center;
   }
   .draft-box:hover { border-color: var(--gold); background: rgba(242,240,230,0.04); }
   .lock-icon { font-size: 1.8rem; margin-bottom: 10px; display: block; }
@@ -41,13 +46,9 @@
   .draft-note { font-size: 0.85rem; color: var(--chalk-dim); margin-top: 8px; line-height: 1.6; }
 
   .live-box {
-    border-style: solid; border-color: var(--gold); border-width: 2px;
-    padding: 40px 28px; margin-bottom: 24px;
+    border-style: solid; border-color: var(--gold);
   }
   .live-box:hover { background: rgba(224,194,111,0.08); }
-  .live-box .lock-icon { font-size: 2.2rem; }
-  .live-box .draft-label { font-size: 2rem; color: var(--gold); }
-  .live-box .draft-note { font-size: 0.95rem; }
 </style>
 </head>
 <body>
@@ -61,17 +62,19 @@
   <h1>Parrish Tree Service</h1>
   <div class="loc">Daleville, AL</div>
 
-  <a class="draft-box live-box" href="https://parrishtreeservice.com" target="_blank" rel="noopener">
-    <span class="lock-icon">&#9889;</span>
-    <span class="draft-label">Live</span>
-    <div class="draft-note">parrishtreeservice.com — the real site, live and running now.</div>
-  </a>
+  <div class="box-row">
+    <a class="draft-box live-box" href="https://parrishtreeservice.com" target="_blank" rel="noopener">
+      <span class="lock-icon">&#9889;</span>
+      <span class="draft-label">Live</span>
+      <div class="draft-note">parrishtreeservice.com — the real site, live and running now.</div>
+    </a>
 
-  <a class="draft-box" href="/web-design/parrish-tree-service/draft/">
-    <span class="lock-icon">&#128274;</span>
-    <span class="draft-label">Drafts</span>
-    <div class="draft-note">Password protected — internal review before anything changes on the live site.</div>
-  </a>
+    <a class="draft-box" href="/web-design/parrish-tree-service/draft/">
+      <span class="lock-icon">&#128274;</span>
+      <span class="draft-label">Drafts</span>
+      <div class="draft-note">Password protected — internal review before anything changes on the live site.</div>
+    </a>
+  </div>
 </main>
 
 </body>
