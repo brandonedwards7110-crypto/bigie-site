@@ -85,13 +85,23 @@
   .hero-content h1{font-size:clamp(2.4rem,7vw,5rem);line-height:1;text-shadow:0 6px 30px rgba(0,0,0,.5);}
   .hero-content p{margin-top:16px;color:var(--muted);font-size:clamp(.95rem,1.6vw,1.2rem);max-width:520px;}
   .hero-tag{margin-top:26px;color:var(--orange);font-family:'Oswald',sans-serif;letter-spacing:.16em;font-size:.85rem;text-transform:uppercase;}
-  .scroll-cue{
-    position:absolute;bottom:34px;left:50%;transform:translateX(-50%);z-index:2;
-    display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--muted);font-size:.75rem;
-    letter-spacing:.2em;text-transform:uppercase;
+  /* ---- persistent ghost bottom bar (standing Bigie build spec, ref: carriders.org) ---- */
+  .ghost-bar{
+    position:fixed;inset-inline:0;bottom:0;z-index:600;
+    display:flex;flex-direction:column;align-items:center;gap:4px;
+    pointer-events:none;
+    background:linear-gradient(0deg, rgba(0,0,0,.5) 0%, rgba(0,0,0,0) 100%);
+    padding-top:40px;padding-bottom:max(env(safe-area-inset-bottom), .5rem);
+    color:#fff;
   }
-  .scroll-cue .chev{width:14px;height:14px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);animation:bob 1.8s infinite;}
-  @keyframes bob{0%,100%{transform:translateY(0) rotate(45deg);}50%{transform:translateY(8px) rotate(45deg);}}
+  .ghost-bar .chevs{display:flex;width:100%;max-width:320px;align-items:center;justify-content:space-between;padding-inline:40px;}
+  .ghost-bar .chev-stack{display:flex;flex-direction:column;align-items:center;}
+  .ghost-bar .chev-stack.up{transform:rotate(180deg);}
+  .ghost-bar .chev{width:10px;height:10px;border-right:2px solid rgba(255,255,255,.85);border-bottom:2px solid rgba(255,255,255,.85);transform:rotate(45deg);}
+  .ghost-bar .chev:first-child{margin-bottom:-6px;}
+  .ghost-bar p{pointer-events:auto;font-size:.75rem;color:rgba(255,255,255,.85);margin:0;}
+  .ghost-bar a{color:inherit;text-decoration:underline;text-decoration-color:rgba(255,255,255,.5);text-underline-offset:2px;}
+  .ghost-bar a:hover{color:#fff;}
 
   /* ---- icon cover transition ---- */
   .icon-wrap{position:relative;height:220vh;}
@@ -183,9 +193,7 @@
     color:rgba(255,255,255,.55);font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;
   }
 
-  footer{background:var(--ink);text-align:center;padding:34px 6vw 40px;border-top:1px solid var(--line);position:relative;z-index:6;}
-  footer a{color:var(--muted);text-decoration:none;font-size:.85rem;}
-  footer a:hover{color:var(--orange);}
+  /* legacy footer rule removed — replaced by .ghost-bar (persistent, fixed) */
 </style>
 </head>
 <body>
@@ -222,7 +230,6 @@
       <p>Commercial HVAC construction. Auburn &amp; Opelika, Alabama — family owned and operated since 1929.</p>
       <div class="hero-tag">Licensed · Bonded · Insured</div>
     </div>
-    <div class="scroll-cue"><span>Scroll</span><div class="chev"></div></div>
   </section>
 
   <!-- ICON COVER TRANSITION -->
@@ -390,9 +397,13 @@
     </div>
   </section>
 
-  <footer>
-    <a href="https://bigie.us" target="_blank" rel="noopener">Powered by Bigie</a>
-  </footer>
+  <div class="ghost-bar">
+    <div class="chevs">
+      <span class="chev-stack"><span class="chev"></span><span class="chev"></span></span>
+      <span class="chev-stack up"><span class="chev"></span><span class="chev"></span></span>
+    </div>
+    <p>airconal.com — Powered by <a href="https://tektonbybigie.com" target="_blank" rel="noopener noreferrer">Tekton by Bigie</a></p>
+  </div>
 
 <script>
   // generic crossfade slideshows
