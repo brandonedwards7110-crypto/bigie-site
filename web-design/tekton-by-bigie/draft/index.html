@@ -18,44 +18,6 @@
   html,body{margin:0;background:var(--panel);color:var(--ink);font-family:'Space Grotesk',sans-serif;}
   a{color:inherit;text-decoration:none;}
 
-  /* ---- lock screen ---- */
-  #lock{
-    position:fixed;inset:0;z-index:1000;
-    background:#0B0C0E;
-    display:flex;align-items:center;justify-content:center;
-    padding:24px;
-  }
-  #lock.unlocked{display:none;}
-  .lock-box{
-    max-width:360px;width:100%;text-align:center;
-  }
-  .lock-box .lock-icon{font-size:2rem;display:block;margin-bottom:18px;opacity:0.85;}
-  .lock-box h1{
-    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.6rem;
-    letter-spacing:0.02em;margin:0 0 6px 0;
-  }
-  .lock-box p{
-    font-family:'IBM Plex Mono',monospace;font-size:0.8rem;color:#8B8D94;
-    letter-spacing:0.04em;margin:0 0 26px 0;
-  }
-  .lock-box input{
-    width:100%;padding:13px 16px;font-family:'IBM Plex Mono',monospace;font-size:0.95rem;
-    background:#1B1D21;border:1px solid #2C2E33;border-radius:5px;color:var(--ink);
-    margin-bottom:12px;letter-spacing:0.05em;
-  }
-  .lock-box input:focus{outline:none;border-color:var(--accent);}
-  .lock-box button{
-    width:100%;padding:13px 16px;font-family:'IBM Plex Mono',monospace;font-size:0.85rem;
-    letter-spacing:0.08em;text-transform:uppercase;background:var(--accent);border:none;border-radius:5px;
-    color:#1A1108;font-weight:500;cursor:pointer;
-  }
-  .lock-box button:hover{background:#DB8C52;}
-  .lock-error{font-family:'IBM Plex Mono',monospace;font-size:0.78rem;color:#C9704A;min-height:1.4em;margin-top:10px;}
-
-  /* ---- page ---- */
-  #page{display:none;}
-  #page.visible{display:block;}
-
   nav{
     position:fixed;top:0;left:0;right:0;z-index:100;
     display:flex;align-items:center;justify-content:space-between;
@@ -127,127 +89,80 @@
 </head>
 <body>
 
-<div id="lock">
-  <div class="lock-box">
-    <span class="lock-icon">&#128274;</span>
-    <h1>Tekton by Bigie</h1>
-    <p>Internal concept review &mdash; not public</p>
-    <input type="password" id="lockInput" placeholder="Passphrase" autocomplete="off">
-    <button id="lockBtn">Enter</button>
-    <div class="lock-error" id="lockError"></div>
-  </div>
-</div>
+<nav>
+  <a class="nav-brand" href="/">powered by bigie</a>
+  <a class="nav-back" href="/web-design/">&larr; Web Design</a>
+</nav>
 
-<div id="page">
+<div class="hero">
+  <img class="hero-photo" src="assets/colosseum-night.jpg" alt="The Colosseum, illuminated at night">
+  <div class="scrim-a"></div>
+  <div class="scrim-b"></div>
+  <svg class="laser" viewBox="0 0 1440 2" preserveAspectRatio="none" style="overflow:visible;">
+    <defs>
+      <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+        <feGaussianBlur stdDeviation="3.2" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <circle cx="64" cy="1" r="4" fill="var(--accent)" filter="url(#glow)"/>
+    <line x1="64" y1="1" x2="1400" y2="1" stroke="var(--accent)" stroke-width="1.5" filter="url(#glow)" opacity="0.85"/>
+  </svg>
 
-  <nav>
-    <a class="nav-brand" href="/">powered by bigie</a>
-    <a class="nav-back" href="/web-design/">&larr; Web Design</a>
-  </nav>
-
-  <div class="hero">
-    <img class="hero-photo" src="assets/colosseum-night.jpg" alt="The Colosseum, illuminated at night">
-    <div class="scrim-a"></div>
-    <div class="scrim-b"></div>
-    <svg class="laser" viewBox="0 0 1440 2" preserveAspectRatio="none" style="overflow:visible;">
-      <defs>
-        <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
-          <feGaussianBlur stdDeviation="3.2" result="blur"/>
-          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-      </defs>
-      <circle cx="64" cy="1" r="4" fill="var(--accent)" filter="url(#glow)"/>
-      <line x1="64" y1="1" x2="1400" y2="1" stroke="var(--accent)" stroke-width="1.5" filter="url(#glow)" opacity="0.85"/>
-    </svg>
-
-    <div class="hero-copy">
-      <div class="name-row">
-        <div class="tekton-wrap">
-          <h1>TEKTON</h1>
-          <div class="the-builder">The Builder</div>
-        </div>
-        <span class="by-bigie">by Bigie</span>
+  <div class="hero-copy">
+    <div class="name-row">
+      <div class="tekton-wrap">
+        <h1>TEKTON</h1>
+        <div class="the-builder">The Builder</div>
       </div>
-      <div class="divider"></div>
-      <p class="tagline">Real sites, engineered to spec &mdash; not assembled from a template. Here&rsquo;s what&rsquo;s on the bench right now.</p>
+      <span class="by-bigie">by Bigie</span>
     </div>
+    <div class="divider"></div>
+    <p class="tagline">Real sites, engineered to spec &mdash; not assembled from a template. Here&rsquo;s what&rsquo;s on the bench right now.</p>
   </div>
-
-  <div class="roster">
-    <div class="card" style="--badge:var(--accent);">
-      <div class="card-name">Parrish Tree Service</div>
-      <div class="card-meta">Daleville, AL</div>
-      <div class="card-status">Live</div>
-    </div>
-    <div class="card" style="--badge:#9AA0A6;">
-      <div class="card-name">Made by Madison</div>
-      <div class="card-meta">madisonmade.net</div>
-      <div class="card-status">In Progress</div>
-    </div>
-    <div class="card" style="--badge:#9AA0A6;">
-      <div class="card-name">Elements Salon</div>
-      <div class="card-meta">Opelika, AL</div>
-      <div class="card-status">In Progress</div>
-    </div>
-    <div class="card" style="--badge:#9AA0A6;">
-      <div class="card-name">AirCon Mechanical</div>
-      <div class="card-meta">Auburn/Opelika, AL</div>
-      <div class="card-status">In Progress</div>
-    </div>
-    <div class="card" style="--badge:#55585F;">
-      <div class="card-name">Bigie App</div>
-      <div class="card-meta">In-house product</div>
-      <div class="card-status">Not Started</div>
-    </div>
-    <div class="card" style="--badge:#55585F;">
-      <div class="card-name">Bigie Lite</div>
-      <div class="card-meta">In-house product</div>
-      <div class="card-status">Not Started</div>
-    </div>
-    <div class="card" style="--badge:#55585F;">
-      <div class="card-name">Car Riders</div>
-      <div class="card-meta">In-house product</div>
-      <div class="card-status">Not Started</div>
-    </div>
-  </div>
-
-  <footer>
-    Concept draft, not final. Hero photo: Benfoto (Ben Skála), CC BY-SA 3.0, via Wikimedia Commons &mdash; needs a licensed or original replacement before this goes live.
-  </footer>
-
 </div>
 
-<script>
-  (function(){
-    var CORRECT = 'tekton2026';
-    var lock = document.getElementById('lock');
-    var page = document.getElementById('page');
-    var input = document.getElementById('lockInput');
-    var btn = document.getElementById('lockBtn');
-    var err = document.getElementById('lockError');
+<div class="roster">
+  <div class="card" style="--badge:var(--accent);">
+    <div class="card-name">Parrish Tree Service</div>
+    <div class="card-meta">Daleville, AL</div>
+    <div class="card-status">Live</div>
+  </div>
+  <div class="card" style="--badge:#9AA0A6;">
+    <div class="card-name">Made by Madison</div>
+    <div class="card-meta">madisonmade.net</div>
+    <div class="card-status">In Progress</div>
+  </div>
+  <div class="card" style="--badge:#9AA0A6;">
+    <div class="card-name">Elements Salon</div>
+    <div class="card-meta">Opelika, AL</div>
+    <div class="card-status">In Progress</div>
+  </div>
+  <div class="card" style="--badge:#9AA0A6;">
+    <div class="card-name">AirCon Mechanical</div>
+    <div class="card-meta">Auburn/Opelika, AL</div>
+    <div class="card-status">In Progress</div>
+  </div>
+  <div class="card" style="--badge:#55585F;">
+    <div class="card-name">Bigie App</div>
+    <div class="card-meta">In-house product</div>
+    <div class="card-status">Not Started</div>
+  </div>
+  <div class="card" style="--badge:#55585F;">
+    <div class="card-name">Bigie Lite</div>
+    <div class="card-meta">In-house product</div>
+    <div class="card-status">Not Started</div>
+  </div>
+  <div class="card" style="--badge:#55585F;">
+    <div class="card-name">Car Riders</div>
+    <div class="card-meta">In-house product</div>
+    <div class="card-status">Not Started</div>
+  </div>
+</div>
 
-    function unlock(){
-      lock.classList.add('unlocked');
-      page.classList.add('visible');
-      try { sessionStorage.setItem('tekton_draft_unlocked', '1'); } catch(e){}
-    }
-    function tryUnlock(){
-      if (input.value.trim().toLowerCase() === CORRECT) {
-        unlock();
-      } else {
-        err.textContent = 'Wrong passphrase.';
-        input.value = '';
-        input.focus();
-      }
-    }
-    try {
-      if (sessionStorage.getItem('tekton_draft_unlocked') === '1') unlock();
-    } catch(e){}
-
-    btn.addEventListener('click', tryUnlock);
-    input.addEventListener('keydown', function(e){ if (e.key === 'Enter') tryUnlock(); });
-  })();
-</script>
+<footer>
+  Concept draft, not final. Hero photo: Benfoto (Ben Skála), CC BY-SA 3.0, via Wikimedia Commons &mdash; needs a licensed or original replacement before this goes live.
+</footer>
 
 </body>
 </html>
