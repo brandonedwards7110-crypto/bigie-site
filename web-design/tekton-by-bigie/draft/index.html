@@ -83,8 +83,25 @@
     border:1px solid var(--badge,var(--accent));color:var(--badge,var(--accent));
   }
 
-  footer{padding:30px 5vw 50px 5vw;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:#55585F;line-height:1.7;}
+  footer{padding:30px 5vw 90px 5vw;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:#55585F;line-height:1.7;}
   footer a{color:#8B8D94;text-decoration:underline;}
+
+  /* persistent "powered by" ghost bottom bar — standing spec, ported from carriders.org */
+  .ghost-bar{
+    position:fixed;inset-inline:0;bottom:0;z-index:50;
+    display:flex;flex-direction:column;align-items:center;gap:4px;
+    padding:40px 0 8px;padding-bottom:max(env(safe-area-inset-bottom),0.5rem);
+    background:linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+    pointer-events:none;
+  }
+  .ghost-bar-chevrons{display:flex;width:100%;max-width:320px;align-items:center;justify-content:space-between;padding:0 40px;}
+  .ghost-chevron{display:flex;flex-direction:column;align-items:center;}
+  .ghost-chevron.up{transform:rotate(180deg);}
+  .ghost-chevron span{width:10px;height:10px;border-right:2px solid rgba(255,255,255,0.85);border-bottom:2px solid rgba(255,255,255,0.85);transform:rotate(45deg);}
+  .ghost-chevron span:first-child{margin-bottom:-6px;}
+  .ghost-bar p{pointer-events:auto;margin:0;font-size:0.75rem;color:rgba(255,255,255,0.85);}
+  .ghost-bar a{color:inherit;text-decoration:underline;text-decoration-color:rgba(255,255,255,0.5);text-underline-offset:2px;}
+  .ghost-bar a:hover{color:#fff;}
 </style>
 </head>
 <body>
@@ -163,6 +180,14 @@
 <footer>
   Concept draft, not final. Hero photo: Benfoto (Ben Skála), CC BY-SA 3.0, via Wikimedia Commons &mdash; needs a licensed or original replacement before this goes live.
 </footer>
+
+<div class="ghost-bar">
+  <div class="ghost-bar-chevrons">
+    <span class="ghost-chevron down"><span></span><span></span></span>
+    <span class="ghost-chevron up"><span></span><span></span></span>
+  </div>
+  <p>tektonbybigie.com &mdash; Powered by <a href="https://bigie.us" target="_blank" rel="noopener noreferrer">Bigie</a></p>
+</div>
 
 </body>
 </html>
