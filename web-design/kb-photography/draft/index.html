@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KB Photography &mdash; Florida Panhandle Photographer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Alex+Brush&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf5ea; --cream-deep: #f0e6d2; --ink: #2b2621; --ink-soft: #5c534a;
+    --gold: #c9a24b; --teal: #2f6f6a; --sand: #e8d9c3;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: var(--ink); background: var(--cream); -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  h1, h2, .display { font-family: "Playfair Display", serif; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 26px 24px; }
+  .brand { font-family: "Playfair Display", serif; font-weight: 600; font-size: 1.3rem; letter-spacing: 0.02em; }
+  .nav-links a { text-decoration: none; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; margin-left: 26px; color: var(--ink-soft); }
+  .nav-links a:hover { color: var(--teal); }
+
+  /* ---- HERO: photographer intro, front and center ---- */
+  .hero {
+    display: grid; grid-template-columns: 340px 1fr; gap: 56px; align-items: center;
+    max-width: 1000px; margin: 40px auto 90px; padding: 0 24px;
+  }
+  .hero-photo {
+    width: 100%; aspect-ratio: 1/1; border-radius: 50%; overflow: hidden;
+    border: 6px solid #fff; box-shadow: 0 18px 40px rgba(43,38,33,0.18);
+  }
+  .hero-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .hero-eyebrow { color: var(--gold); font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; font-size: 0.78rem; margin-bottom: 10px; }
+  .hero h1 { font-size: clamp(1.9rem, 3.4vw, 2.6rem); margin: 0 0 16px; line-height: 1.15; }
+  .hero p { color: var(--ink-soft); line-height: 1.75; font-size: 1.02rem; margin: 0 0 14px; }
+  .hero .cta-row { margin-top: 22px; display: flex; gap: 14px; flex-wrap: wrap; }
+  .cta { display: inline-block; padding: 13px 26px; border-radius: 999px; font-weight: 700; text-decoration: none; font-size: 0.92rem; }
+  .cta.primary { background: var(--teal); color: #fff; }
+  .cta.secondary { border: 1.5px solid var(--ink); color: var(--ink); }
+
+  @media (max-width: 760px) {
+    .hero { grid-template-columns: 1fr; text-align: center; gap: 28px; }
+    .hero-photo { width: 220px; margin: 0 auto; }
+    .hero .cta-row { justify-content: center; }
+  }
+
+  /* ---- ALBUMS grid ---- */
+  .albums-intro { text-align: center; max-width: 620px; margin: 0 auto 50px; }
+  .albums-intro .section-label { color: var(--gold); font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; font-size: 0.78rem; margin-bottom: 10px; }
+  .albums-intro h2 { font-size: clamp(1.8rem, 3vw, 2.3rem); margin: 0 0 12px; }
+  .albums-intro p { color: var(--ink-soft); line-height: 1.7; }
+
+  .albums-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 34px;
+    padding: 0 0 100px;
+  }
+  .album-card {
+    text-decoration: none; color: var(--ink); text-align: center; border-radius: 18px;
+    padding: 34px 20px 26px; position: relative;
+    box-shadow: 0 10px 30px rgba(43,38,33,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .album-card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(43,38,33,0.14); }
+  .album-card.frame-a { background: var(--cream); border: 1px solid var(--sand); }
+  .album-card.frame-b { background: linear-gradient(160deg, var(--sand) 0%, var(--cream-deep) 100%); border: 1px solid #ddc9a3; }
+
+  .monogram { font-family: "Alex Brush", cursive; font-size: 2.1rem; position: absolute; top: 16px; left: 22px; color: var(--ink); opacity: 0.85; }
+  .oval-frame {
+    width: 168px; height: 216px; margin: 18px auto 16px; border-radius: 50% / 40%;
+    overflow: hidden; border: 3px solid #fff; outline: 1.5px solid rgba(43,38,33,0.25); outline-offset: 4px;
+    box-shadow: 0 10px 22px rgba(43,38,33,0.16);
+  }
+  .oval-frame img { width: 100%; height: 100%; object-fit: cover; }
+  .card-icon { color: var(--gold); font-size: 0.95rem; margin-bottom: 6px; }
+  .card-title { font-family: "Playfair Display", serif; font-weight: 700; font-size: 1.3rem; text-transform: uppercase; letter-spacing: 0.02em; }
+  .card-tag { font-size: 0.7rem; letter-spacing: 0.14em; color: var(--ink-soft); margin-top: 6px; text-transform: uppercase; }
+
+  /* ---- GALLERY sections ---- */
+  .gallery-section { padding: 60px 0 40px; border-top: 1px solid var(--sand); scroll-margin-top: 26px; }
+  .gallery-head { text-align: center; margin-bottom: 34px; }
+  .gallery-head .section-label { color: var(--gold); font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; font-size: 0.76rem; margin-bottom: 8px; }
+  .gallery-head h2 { font-size: clamp(1.6rem, 2.6vw, 2.1rem); margin: 0; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+  .gallery-grid img { width: 100%; height: 300px; object-fit: cover; border-radius: 10px; box-shadow: 0 6px 18px rgba(43,38,33,0.10); }
+  .back-to-albums { display: block; text-align: center; margin-top: 34px; font-size: 0.85rem; font-weight: 600; text-decoration: none; color: var(--teal); }
+
+  /* ---- ABOUT / CONTACT ---- */
+  .contact-section { background: var(--ink); color: var(--cream); padding: 80px 0 150px; margin-top: 40px; }
+  .contact-section .wrap { text-align: center; max-width: 560px; }
+  .contact-section .section-label { color: var(--gold); font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; font-size: 0.78rem; margin-bottom: 12px; }
+  .contact-section h2 { font-size: clamp(1.8rem, 3vw, 2.3rem); margin: 0 0 16px; }
+  .contact-section p { color: rgba(250,245,234,0.75); line-height: 1.7; margin: 0 0 28px; }
+  .contact-section .cta.primary { background: var(--gold); color: var(--ink); }
+  .contact-details { margin-top: 30px; font-size: 0.92rem; color: rgba(250,245,234,0.8); line-height: 2; }
+  .contact-details a { color: var(--cream); text-decoration: underline; text-decoration-color: rgba(250,245,234,0.4); }
+
+  /* ---- persistent ghost bottom bar (standing Bigie build spec, ref: carriders.org) ---- */
+  .ghost-bar{
+    position:fixed;inset-inline:0;bottom:0;z-index:600;
+    display:flex;flex-direction:column;align-items:center;gap:4px;
+    pointer-events:none;
+    background:linear-gradient(0deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,0) 100%);
+    padding-top:40px;padding-bottom:max(env(safe-area-inset-bottom), .5rem);
+    color:#fff;
+  }
+  .ghost-bar .chevs{display:flex;width:100%;max-width:320px;align-items:center;justify-content:space-between;padding-inline:40px;}
+  .ghost-bar .chev-stack{display:flex;flex-direction:column;align-items:center;}
+  .ghost-bar .chev-stack.up{transform:rotate(180deg);}
+  .ghost-bar .chev{width:10px;height:10px;border-right:2px solid rgba(255,255,255,.85);border-bottom:2px solid rgba(255,255,255,.85);transform:rotate(45deg);}
+  .ghost-bar .chev:first-child{margin-bottom:-6px;}
+  .ghost-bar p{pointer-events:auto;font-size:.75rem;color:rgba(255,255,255,.85);margin:0;}
+  .ghost-bar a{color:inherit;text-decoration:underline;text-decoration-color:rgba(255,255,255,.5);text-underline-offset:2px;}
+  .ghost-bar a:hover{color:#fff;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">KB Photography</div>
+  <div class="nav-links">
+    <a href="#albums">Albums</a>
+    <a href="#contact">Book a Session</a>
+  </div>
+</nav>
+
+<!-- HERO: photographer front and center, per Brandon's direction -->
+<section class="hero">
+  <div class="hero-photo">
+    <img src="assets/owner/kaylynn.jpg" alt="Kaylynn Thomas, KB Photography">
+  </div>
+  <div>
+    <div class="hero-eyebrow">Meet Your Photographer</div>
+    <h1>Hi! I'm Kaylynn Thomas, the face, heart, and camera behind KB Photography.</h1>
+    <p>Photography, for me, is about so much more than capturing images &mdash; it's about telling the stories behind life's simplest, most meaningful moments.</p>
+    <p>As a mother to a one year old, I know first hand how fast time flies and how precious those everyday moments really are. Through my lens, I strive to preserve the beauty in everyday life and create lasting memories that inspire and connect us all.</p>
+    <p>Whether it's a family gathering on the beach, a milestone celebration, or a quiet moment worth remembering, I'd love the opportunity to capture it for you. Welcome to KB Photography &mdash; I can't wait to connect with you!</p>
+    <div class="cta-row">
+      <a class="cta primary" href="#contact">Book a Session</a>
+      <a class="cta secondary" href="#albums">View Albums</a>
+    </div>
+  </div>
+</section>
+
+<!-- ALBUMS -->
+<div class="wrap">
+  <div class="albums-intro" id="albums">
+    <div class="section-label">Portfolio</div>
+    <h2>Albums</h2>
+    <p>Every session tells its own story &mdash; browse by the moment you're looking to capture.</p>
+  </div>
+
+  <div class="albums-grid">
+
+      <a class="album-card frame-b" href="#family-reunion">
+        <div class="monogram">KB</div>
+        <div class="oval-frame">
+          <img src="assets/album-1-family-reunion/819088102_122113359015451480_5839750649866410113_n.jpg" alt="Family Reunion" loading="lazy">
+        </div>
+        <div class="card-icon">&#10047;</div>
+        <div class="card-title">Family Reunion</div>
+        <div class="card-tag">FAMILY • 30A</div>
+      </a>
+
+      <a class="album-card frame-a" href="#the-proposal">
+        <div class="monogram">KB</div>
+        <div class="oval-frame">
+          <img src="assets/album-2-the-proposal/797684833_122110933575451480_7108655423646406356_n.jpg" alt="The Proposal" loading="lazy">
+        </div>
+        <div class="card-icon">&#10047;</div>
+        <div class="card-title">The Proposal</div>
+        <div class="card-tag">ENGAGEMENT • BEACH</div>
+      </a>
+
+      <a class="album-card frame-b" href="#golden-hour-getaway">
+        <div class="monogram">KB</div>
+        <div class="oval-frame">
+          <img src="assets/album-3-golden-hour-getaway/787945643_122105369763451480_5338609462511727302_n.jpg" alt="Golden Hour Getaway" loading="lazy">
+        </div>
+        <div class="card-icon">&#10047;</div>
+        <div class="card-title">Golden Hour Getaway</div>
+        <div class="card-tag">FRIENDS • RESORT</div>
+      </a>
+
+      <a class="album-card frame-b" href="#little-ones">
+        <div class="monogram">KB</div>
+        <div class="oval-frame">
+          <img src="assets/album-4-little-ones/778958314_122099625261451480_4724982078963170509_n.jpg" alt="Little Ones" loading="lazy">
+        </div>
+        <div class="card-icon">&#10047;</div>
+        <div class="card-title">Little Ones</div>
+        <div class="card-tag">NEWBORN • SIBLINGS</div>
+      </a>
+
+      <a class="album-card frame-a" href="#field-and-film">
+        <div class="monogram">KB</div>
+        <div class="oval-frame">
+          <img src="assets/album-5-field-and-film/777327786_122098246401451480_6075400341026326803_n.jpg" alt="Field &amp; Film" loading="lazy">
+        </div>
+        <div class="card-icon">&#10047;</div>
+        <div class="card-title">Field &amp; Film</div>
+        <div class="card-tag">COUPLES • BLACK &amp; WHITE</div>
+      </a>
+
+      <a class="album-card frame-a" href="#girls-trip">
+        <div class="monogram">KB</div>
+        <div class="oval-frame">
+          <img src="assets/album-7-girls-trip/787945643_122105664345451480_8123523244715151164_n.jpg" alt="Girls' Trip" loading="lazy">
+        </div>
+        <div class="card-icon">&#10047;</div>
+        <div class="card-title">Girls' Trip</div>
+        <div class="card-tag">FRIENDS • 30A</div>
+      </a>
+
+      <a class="album-card frame-b" href="#golden-hour-moments">
+        <div class="monogram">KB</div>
+        <div class="oval-frame">
+          <img src="assets/album-8-golden-hour-moments/778985027_122101346133451480_8205827404473873589_n.jpg" alt="Golden Hour Moments" loading="lazy">
+        </div>
+        <div class="card-icon">&#10047;</div>
+        <div class="card-title">Golden Hour Moments</div>
+        <div class="card-tag">PORTRAITS • GULF COAST</div>
+      </a>
+  </div>
+</div>
+
+<!-- GALLERY SECTIONS -->
+<div class="wrap">
+
+    <section class="gallery-section" id="family-reunion">
+      <div class="gallery-head">
+        <div class="section-label">FAMILY • 30A</div>
+        <h2>Family Reunion</h2>
+      </div>
+      <div class="gallery-grid">
+          <img src="assets/album-1-family-reunion/819088102_122113359015451480_5839750649866410113_n.jpg" alt="Family Reunion" loading="lazy">
+          <img src="assets/album-1-family-reunion/821488093_122113359045451480_4991350434799381949_n.jpg" alt="Family Reunion" loading="lazy">
+          <img src="assets/album-1-family-reunion/822276538_122113359021451480_7740982395603945607_n.jpg" alt="Family Reunion" loading="lazy">
+          <img src="assets/album-1-family-reunion/823587997_122113359033451480_6305688981443454949_n.jpg" alt="Family Reunion" loading="lazy">
+      </div>
+      <a class="back-to-albums" href="#albums">&uarr; Back to Albums</a>
+    </section>
+
+    <section class="gallery-section" id="the-proposal">
+      <div class="gallery-head">
+        <div class="section-label">ENGAGEMENT • BEACH</div>
+        <h2>The Proposal</h2>
+      </div>
+      <div class="gallery-grid">
+          <img src="assets/album-2-the-proposal/797684833_122110933575451480_7108655423646406356_n.jpg" alt="The Proposal" loading="lazy">
+          <img src="assets/album-2-the-proposal/809877032_122110933641451480_307048697133380506_n.jpg" alt="The Proposal" loading="lazy">
+          <img src="assets/album-2-the-proposal/810091829_122110933551451480_3629704338035471983_n.jpg" alt="The Proposal" loading="lazy">
+          <img src="assets/album-2-the-proposal/810216428_122110933521451480_5916926336717551896_n.jpg" alt="The Proposal" loading="lazy">
+          <img src="assets/album-2-the-proposal/810385347_122110933617451480_8314993663986575283_n.jpg" alt="The Proposal" loading="lazy">
+          <img src="assets/album-2-the-proposal/810450278_122110933563451480_223248401026071921_n.jpg" alt="The Proposal" loading="lazy">
+          <img src="assets/album-2-the-proposal/810623932_122110933545451480_8241249436723986526_n.jpg" alt="The Proposal" loading="lazy">
+          <img src="assets/album-2-the-proposal/810700206_122110933605451480_5450758663640184223_n.jpg" alt="The Proposal" loading="lazy">
+          <img src="assets/album-2-the-proposal/810731697_122110933527451480_8489496301884788313_n.jpg" alt="The Proposal" loading="lazy">
+          <img src="assets/album-2-the-proposal/811170793_122110933635451480_704184884067746695_n.jpg" alt="The Proposal" loading="lazy">
+      </div>
+      <a class="back-to-albums" href="#albums">&uarr; Back to Albums</a>
+    </section>
+
+    <section class="gallery-section" id="golden-hour-getaway">
+      <div class="gallery-head">
+        <div class="section-label">FRIENDS • RESORT</div>
+        <h2>Golden Hour Getaway</h2>
+      </div>
+      <div class="gallery-grid">
+          <img src="assets/album-3-golden-hour-getaway/787945643_122105369763451480_5338609462511727302_n.jpg" alt="Golden Hour Getaway" loading="lazy">
+          <img src="assets/album-3-golden-hour-getaway/788145323_122105369751451480_5729229330817708650_n.jpg" alt="Golden Hour Getaway" loading="lazy">
+          <img src="assets/album-3-golden-hour-getaway/788753528_122105369733451480_8435024290856124100_n.jpg" alt="Golden Hour Getaway" loading="lazy">
+          <img src="assets/album-3-golden-hour-getaway/789618340_122106491775451480_8915738929368611734_n.jpg" alt="Golden Hour Getaway" loading="lazy">
+          <img src="assets/album-3-golden-hour-getaway/790369224_122106491811451480_930191506764222310_n.jpg" alt="Golden Hour Getaway" loading="lazy">
+          <img src="assets/album-3-golden-hour-getaway/790444390_122106491853451480_7170718838015778065_n.jpg" alt="Golden Hour Getaway" loading="lazy">
+          <img src="assets/album-3-golden-hour-getaway/790531332_122106491871451480_7588048439598047808_n.jpg" alt="Golden Hour Getaway" loading="lazy">
+          <img src="assets/album-3-golden-hour-getaway/792022547_122106491889451480_1573154590684460461_n.jpg" alt="Golden Hour Getaway" loading="lazy">
+          <img src="assets/album-3-golden-hour-getaway/792109706_122106491841451480_940748886523474784_n.jpg" alt="Golden Hour Getaway" loading="lazy">
+          <img src="assets/album-3-golden-hour-getaway/793095348_122107321809451480_2428445204115686837_n.jpg" alt="Golden Hour Getaway" loading="lazy">
+          <img src="assets/album-3-golden-hour-getaway/793161562_122107321761451480_1841167369169851067_n.jpg" alt="Golden Hour Getaway" loading="lazy">
+          <img src="assets/album-3-golden-hour-getaway/794727127_122107321791451480_5518800135228518121_n.jpg" alt="Golden Hour Getaway" loading="lazy">
+          <img src="assets/album-3-golden-hour-getaway/794879249_122107321779451480_1720550109794910967_n.jpg" alt="Golden Hour Getaway" loading="lazy">
+          <img src="assets/album-3-golden-hour-getaway/795255516_122107321725451480_2206251137710504268_n.jpg" alt="Golden Hour Getaway" loading="lazy">
+          <img src="assets/album-3-golden-hour-getaway/795557670_122107321845451480_7075661628230992073_n.jpg" alt="Golden Hour Getaway" loading="lazy">
+      </div>
+      <a class="back-to-albums" href="#albums">&uarr; Back to Albums</a>
+    </section>
+
+    <section class="gallery-section" id="little-ones">
+      <div class="gallery-head">
+        <div class="section-label">NEWBORN • SIBLINGS</div>
+        <h2>Little Ones</h2>
+      </div>
+      <div class="gallery-grid">
+          <img src="assets/album-4-little-ones/778958314_122099625261451480_4724982078963170509_n.jpg" alt="Little Ones" loading="lazy">
+          <img src="assets/album-4-little-ones/778972249_122099625297451480_8079684821329602940_n.jpg" alt="Little Ones" loading="lazy">
+          <img src="assets/album-4-little-ones/778984909_122099625315451480_2069245050605588485_n.jpg" alt="Little Ones" loading="lazy">
+          <img src="assets/album-4-little-ones/778984910_122099625357451480_3181054740727286376_n.jpg" alt="Little Ones" loading="lazy">
+          <img src="assets/album-4-little-ones/778985121_122099625279451480_8890131504236513413_n.jpg" alt="Little Ones" loading="lazy">
+          <img src="assets/album-4-little-ones/778985497_122099625243451480_1886478121536283393_n.jpg" alt="Little Ones" loading="lazy">
+      </div>
+      <a class="back-to-albums" href="#albums">&uarr; Back to Albums</a>
+    </section>
+
+    <section class="gallery-section" id="field-and-film">
+      <div class="gallery-head">
+        <div class="section-label">COUPLES • BLACK &amp; WHITE</div>
+        <h2>Field &amp; Film</h2>
+      </div>
+      <div class="gallery-grid">
+          <img src="assets/album-5-field-and-film/777327786_122098246401451480_6075400341026326803_n.jpg" alt="Field &amp; Film" loading="lazy">
+          <img src="assets/album-5-field-and-film/777851651_122098246467451480_7832920152327509645_n.jpg" alt="Field &amp; Film" loading="lazy">
+          <img src="assets/album-5-field-and-film/778767412_122098246335451480_2255458230638356593_n.jpg" alt="Field &amp; Film" loading="lazy">
+          <img src="assets/album-5-field-and-film/783076071_122098246551451480_2182316011278896207_n.jpg" alt="Field &amp; Film" loading="lazy">
+      </div>
+      <a class="back-to-albums" href="#albums">&uarr; Back to Albums</a>
+    </section>
+
+    <section class="gallery-section" id="puppy-love">
+      <div class="gallery-head">
+        <div class="section-label">COUPLES • PORTRAITS</div>
+        <h2>Puppy Love</h2>
+      </div>
+      <div class="gallery-grid">
+          <img src="assets/album-6-young-love/778972524_122100633855451480_6367178767847969997_n.jpg" alt="Puppy Love" loading="lazy">
+          <img src="assets/album-6-young-love/778972536_122100633897451480_1866189778963704501_n.jpg" alt="Puppy Love" loading="lazy">
+          <img src="assets/album-6-young-love/778984937_122100633873451480_1431098755898984762_n.jpg" alt="Puppy Love" loading="lazy">
+          <img src="assets/album-6-young-love/778985087_122100633945451480_1682556066460598449_n.jpg" alt="Puppy Love" loading="lazy">
+          <img src="assets/album-6-young-love/778985300_122100633801451480_5679755412992875710_n.jpg" alt="Puppy Love" loading="lazy">
+          <img src="assets/album-6-young-love/778985369_122100633813451480_5949952575341967954_n.jpg" alt="Puppy Love" loading="lazy">
+      </div>
+      <a class="back-to-albums" href="#albums">&uarr; Back to Albums</a>
+    </section>
+
+    <section class="gallery-section" id="girls-trip">
+      <div class="gallery-head">
+        <div class="section-label">FRIENDS • 30A</div>
+        <h2>Girls' Trip</h2>
+      </div>
+      <div class="gallery-grid">
+          <img src="assets/album-7-girls-trip/787945643_122105664345451480_8123523244715151164_n.jpg" alt="Girls' Trip" loading="lazy">
+          <img src="assets/album-7-girls-trip/788780816_122105664321451480_389338297174495276_n.jpg" alt="Girls' Trip" loading="lazy">
+          <img src="assets/album-7-girls-trip/788881208_122105664405451480_2890345098055297511_n.jpg" alt="Girls' Trip" loading="lazy">
+          <img src="assets/album-7-girls-trip/789427927_122105664375451480_65262240914419825_n.jpg" alt="Girls' Trip" loading="lazy">
+          <img src="assets/album-7-girls-trip/790444393_122105664309451480_6628982807809641420_n.jpg" alt="Girls' Trip" loading="lazy">
+      </div>
+      <a class="back-to-albums" href="#albums">&uarr; Back to Albums</a>
+    </section>
+
+    <section class="gallery-section" id="golden-hour-moments">
+      <div class="gallery-head">
+        <div class="section-label">PORTRAITS • GULF COAST</div>
+        <h2>Golden Hour Moments</h2>
+      </div>
+      <div class="gallery-grid">
+          <img src="assets/album-8-golden-hour-moments/778984959_122101346175451480_9066227021113730493_n.jpg" alt="Golden Hour Moments" loading="lazy">
+          <img src="assets/album-8-golden-hour-moments/778985027_122101346133451480_8205827404473873589_n.jpg" alt="Golden Hour Moments" loading="lazy">
+          <img src="assets/album-8-golden-hour-moments/778985102_122101346187451480_5084979933606378852_n.jpg" alt="Golden Hour Moments" loading="lazy">
+          <img src="assets/album-8-golden-hour-moments/801670022_122109592479451480_376197251360339035_n.jpg" alt="Golden Hour Moments" loading="lazy">
+          <img src="assets/album-8-golden-hour-moments/801928221_122109592473451480_1463145216812732572_n.jpg" alt="Golden Hour Moments" loading="lazy">
+      </div>
+      <a class="back-to-albums" href="#albums">&uarr; Back to Albums</a>
+    </section>
+</div>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="wrap">
+    <div class="section-label">Get In Touch</div>
+    <h2>Let's Capture Your Moment</h2>
+    <p>Based in Freeport, FL &mdash; serving the Florida Panhandle including Panama City Beach, Destin, and Seaside. Reach out to check availability and book your session.</p>
+    <a class="cta primary" href="mailto:kb.photographyandfilms@gmail.com">Email KB Photography</a>
+    <div class="contact-details">
+      <div><a href="tel:+17314879991">(731) 487-9991</a></div>
+      <div><a href="mailto:kb.photographyandfilms@gmail.com">kb.photographyandfilms@gmail.com</a></div>
+      <div>Freeport, FL &middot; Florida Panhandle Photographer</div>
+    </div>
+  </div>
+</section>
+
+<div class="ghost-bar">
+  <div class="chevs">
+    <span class="chev-stack"><span class="chev"></span><span class="chev"></span></span>
+    <span class="chev-stack up"><span class="chev"></span><span class="chev"></span></span>
+  </div>
+  <p>Draft preview &mdash; Powered by <a href="https://tektonbybigie.com" target="_blank" rel="noopener noreferrer">Tekton by Bigie</a></p>
+</div>
+
+</body>
+</html>
