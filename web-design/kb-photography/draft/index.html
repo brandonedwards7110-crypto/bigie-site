@@ -24,7 +24,6 @@
   .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
   body > section { scroll-snap-align: start; scroll-snap-stop: always; }
 
-  /* ---- NAV ---- */
   nav {
     position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); box-sizing: border-box;
     z-index: 500; display: flex; align-items: center; justify-content: space-between;
@@ -35,7 +34,7 @@
   .nav-links a { text-decoration: none; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; margin-left: 26px; color: var(--ink-soft); }
   .nav-links a:hover { color: var(--teal); }
   .nav-toggle { display: none; background: none; border: none; width: 34px; height: 34px; padding: 0; cursor: pointer; }
-  .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--ink); margin: 6px auto; transition: transform 0.2s ease, opacity 0.2s ease; }
+  .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--ink); margin: 6px auto; }
   .nav-drawer {
     position: fixed; top: var(--nav-h); left: 0; right: 0; background: var(--cream);
     display: none; flex-direction: column; padding: 10px 24px 18px; z-index: 499;
@@ -51,7 +50,6 @@
     nav .logo img { height: 32px; }
   }
 
-  /* ---- HERO ---- */
   .hero {
     height: 100dvh; box-sizing: border-box; overflow: hidden;
     display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: center;
@@ -78,7 +76,6 @@
     .hero h1 { font-size: 1.5rem; }
   }
 
-  /* ---- ALBUMS INTRO ---- */
   .albums-intro {
     position: relative; height: 100dvh; box-sizing: border-box; display: flex; align-items: center; justify-content: center;
     text-align: center; overflow: hidden; color: #fff;
@@ -94,20 +91,19 @@
   .albums-intro h2 { font-size: clamp(2rem, 4vw, 2.8rem); margin: 0 0 14px; }
   .albums-intro p { color: rgba(255,255,255,0.85); line-height: 1.7; }
 
-  /* ---- ALBUM SLIDES: true full-bleed scene, blurred fill for any letterboxing ---- */
+  /* ---- ALBUM SLIDES: real scene + pre-warped (true perspective) photo composites ---- */
   .album-slide {
     height: 100dvh; box-sizing: border-box; position: relative; overflow: hidden; background: #000;
   }
   .scene-wrap { position: absolute; inset: 0; width: 100%; height: 100%; }
   .scene-bg-blur { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: blur(40px) brightness(0.7) saturate(1.1); transform: scale(1.15); }
-  /* .photo-layer is sized/positioned by JS to exactly match the rendered (letterboxed) box of
-     .scene-bg under object-fit:contain -- every .photo-slot percentage is relative to THIS,
-     not to .scene-wrap, so overlays land on the real image regardless of viewport aspect ratio */
   .photo-layer { position: absolute; }
   .scene-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; }
-  .photo-slot { position: absolute; overflow: hidden; }
-  .slideshow { position: relative; width: 100%; height: 100%; }
-  .slideshow img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.4s ease; }
+  /* each slideshow is already the FULL scene canvas size (pre-warped to the right
+     spot by Python), so it just stacks exactly on top of scene-bg -- no separate
+     positioning/clip-path needed, which removes a whole class of alignment bugs */
+  .slideshow { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .slideshow img { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.4s ease; }
   .slideshow img.active { opacity: 1; }
 
   .on-image-title {
@@ -121,7 +117,6 @@
     .on-image-title h2 { font-size: 1.15rem; }
   }
 
-  /* ---- MEET THE PHOTOGRAPHER ---- */
   .meet-section { height: 100dvh; box-sizing: border-box; display: flex; align-items: center; overflow: hidden; padding: calc(var(--nav-h) + 16px) 24px 24px; background: var(--cream); }
   .meet-inner { display: grid; grid-template-columns: 240px 1fr; gap: 36px; align-items: center; max-width: 940px; margin: 0 auto; }
   .meet-photo { width: 100%; max-height: 46dvh; aspect-ratio: 1/1; border-radius: 50%; overflow: hidden; border: 6px solid #fff; box-shadow: 0 18px 40px rgba(43,38,33,0.18); }
@@ -135,7 +130,6 @@
     .meet-photo { width: 150px; max-height: none; margin: 0 auto; }
   }
 
-  /* ---- CONTACT ---- */
   .contact-section { min-height: 100dvh; box-sizing: border-box; display: flex; align-items: center; background: var(--ink); color: var(--cream); padding: 100px 0 150px; }
   .contact-section .wrap { text-align: center; max-width: 560px; }
   .contact-section .section-label { color: var(--gold); font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; font-size: 0.78rem; margin-bottom: 12px; }
@@ -145,7 +139,6 @@
   .contact-details { margin-top: 30px; font-size: 0.92rem; color: rgba(250,245,234,0.8); line-height: 2; }
   .contact-details a { color: var(--cream); text-decoration: underline; text-decoration-color: rgba(250,245,234,0.4); }
 
-  /* ---- ghost bottom bar ---- */
   .ghost-bar{
     position:fixed;inset-inline:0;bottom:0;z-index:600;
     display:flex;flex-direction:column;align-items:center;gap:4px;
@@ -229,29 +222,23 @@
           <h2>Family Reunion</h2>
         </div>
         <div class="photo-layer">
-        <div class="photo-slot" style="top:25.00%; left:6.00%; width:26.00%; height:38.00%; clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%); -webkit-clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%);">
-          <div class="slideshow span-group" data-interval="4200" data-group="family-reunion">
-          <img src="assets/album-1-family-reunion/819088102_122113359015451480_5839750649866410113_n.jpg" alt="" loading="lazy" class="active">
-          <img src="assets/album-1-family-reunion/821488093_122113359045451480_4991350434799381949_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-1-family-reunion/822276538_122113359021451480_7740982395603945607_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-1-family-reunion/823587997_122113359033451480_6305688981443454949_n.jpg" alt="" loading="lazy" class="">
-          </div>
+        <div class="slideshow span-group" data-interval="4200" data-group="family-reunion">
+          <img src="assets/warped/family-reunion/slot0_0.png" alt="" loading="lazy" class="active">
+          <img src="assets/warped/family-reunion/slot0_1.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/family-reunion/slot0_2.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/family-reunion/slot0_3.png" alt="" loading="lazy" class="">
         </div>
-        <div class="photo-slot" style="top:22.00%; left:36.00%; width:27.00%; height:42.00%; clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%); -webkit-clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%);">
-          <div class="slideshow span-group" data-interval="4200" data-group="family-reunion">
-          <img src="assets/album-1-family-reunion/819088102_122113359015451480_5839750649866410113_n.jpg" alt="" loading="lazy" class="active">
-          <img src="assets/album-1-family-reunion/821488093_122113359045451480_4991350434799381949_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-1-family-reunion/822276538_122113359021451480_7740982395603945607_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-1-family-reunion/823587997_122113359033451480_6305688981443454949_n.jpg" alt="" loading="lazy" class="">
-          </div>
+        <div class="slideshow span-group" data-interval="4600" data-group="family-reunion">
+          <img src="assets/warped/family-reunion/slot1_0.png" alt="" loading="lazy" class="active">
+          <img src="assets/warped/family-reunion/slot1_1.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/family-reunion/slot1_2.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/family-reunion/slot1_3.png" alt="" loading="lazy" class="">
         </div>
-        <div class="photo-slot" style="top:25.00%; left:67.00%; width:26.00%; height:38.00%; clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%); -webkit-clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%);">
-          <div class="slideshow span-group" data-interval="4200" data-group="family-reunion">
-          <img src="assets/album-1-family-reunion/819088102_122113359015451480_5839750649866410113_n.jpg" alt="" loading="lazy" class="active">
-          <img src="assets/album-1-family-reunion/821488093_122113359045451480_4991350434799381949_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-1-family-reunion/822276538_122113359021451480_7740982395603945607_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-1-family-reunion/823587997_122113359033451480_6305688981443454949_n.jpg" alt="" loading="lazy" class="">
-          </div>
+        <div class="slideshow span-group" data-interval="5000" data-group="family-reunion">
+          <img src="assets/warped/family-reunion/slot2_0.png" alt="" loading="lazy" class="active">
+          <img src="assets/warped/family-reunion/slot2_1.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/family-reunion/slot2_2.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/family-reunion/slot2_3.png" alt="" loading="lazy" class="">
         </div>
         </div>
       </div>
@@ -266,19 +253,17 @@
           <h2>The Proposal</h2>
         </div>
         <div class="photo-layer">
-        <div class="photo-slot" style="top:16.00%; left:25.00%; width:50.00%; height:29.00%; clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%); -webkit-clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%);">
-          <div class="slideshow" data-interval="4200">
-          <img src="assets/album-2-the-proposal/797684833_122110933575451480_7108655423646406356_n.jpg" alt="" loading="lazy" class="active">
-          <img src="assets/album-2-the-proposal/809877032_122110933641451480_307048697133380506_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-2-the-proposal/810091829_122110933551451480_3629704338035471983_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-2-the-proposal/810216428_122110933521451480_5916926336717551896_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-2-the-proposal/810385347_122110933617451480_8314993663986575283_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-2-the-proposal/810450278_122110933563451480_223248401026071921_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-2-the-proposal/810623932_122110933545451480_8241249436723986526_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-2-the-proposal/810700206_122110933605451480_5450758663640184223_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-2-the-proposal/810731697_122110933527451480_8489496301884788313_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-2-the-proposal/811170793_122110933635451480_704184884067746695_n.jpg" alt="" loading="lazy" class="">
-          </div>
+        <div class="slideshow" data-interval="4200">
+          <img src="assets/warped/the-proposal/slot0_0.png" alt="" loading="lazy" class="active">
+          <img src="assets/warped/the-proposal/slot0_1.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/the-proposal/slot0_2.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/the-proposal/slot0_3.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/the-proposal/slot0_4.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/the-proposal/slot0_5.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/the-proposal/slot0_6.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/the-proposal/slot0_7.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/the-proposal/slot0_8.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/the-proposal/slot0_9.png" alt="" loading="lazy" class="">
         </div>
         </div>
       </div>
@@ -293,30 +278,26 @@
           <h2>Golden Hour Getaway</h2>
         </div>
         <div class="photo-layer">
-        <div class="photo-slot" style="top:24.00%; left:13.00%; width:31.00%; height:66.00%; clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%); -webkit-clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%);">
-          <div class="slideshow" data-interval="4200">
-          <img src="assets/album-3-golden-hour-getaway/787945643_122105369763451480_5338609462511727302_n.jpg" alt="" loading="lazy" class="active">
-          <img src="assets/album-3-golden-hour-getaway/788753528_122105369733451480_8435024290856124100_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-3-golden-hour-getaway/790369224_122106491811451480_930191506764222310_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-3-golden-hour-getaway/790531332_122106491871451480_7588048439598047808_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-3-golden-hour-getaway/792109706_122106491841451480_940748886523474784_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-3-golden-hour-getaway/793151006_122107321833451480_8218497275283543381_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-3-golden-hour-getaway/794230023_122107321821451480_8877842553680789395_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-3-golden-hour-getaway/794879249_122107321779451480_1720550109794910967_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-3-golden-hour-getaway/795557670_122107321845451480_7075661628230992073_n.jpg" alt="" loading="lazy" class="">
-          </div>
+        <div class="slideshow" data-interval="4200">
+          <img src="assets/warped/golden-hour-getaway/slot0_0.png" alt="" loading="lazy" class="active">
+          <img src="assets/warped/golden-hour-getaway/slot0_1.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/golden-hour-getaway/slot0_2.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/golden-hour-getaway/slot0_3.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/golden-hour-getaway/slot0_4.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/golden-hour-getaway/slot0_5.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/golden-hour-getaway/slot0_6.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/golden-hour-getaway/slot0_7.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/golden-hour-getaway/slot0_8.png" alt="" loading="lazy" class="">
         </div>
-        <div class="photo-slot" style="top:24.00%; left:57.00%; width:31.00%; height:66.00%; clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%); -webkit-clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%);">
-          <div class="slideshow" data-interval="4200">
-          <img src="assets/album-3-golden-hour-getaway/788145323_122105369751451480_5729229330817708650_n.jpg" alt="" loading="lazy" class="active">
-          <img src="assets/album-3-golden-hour-getaway/789618340_122106491775451480_8915738929368611734_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-3-golden-hour-getaway/790444390_122106491853451480_7170718838015778065_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-3-golden-hour-getaway/792022547_122106491889451480_1573154590684460461_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-3-golden-hour-getaway/793095348_122107321809451480_2428445204115686837_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-3-golden-hour-getaway/793161562_122107321761451480_1841167369169851067_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-3-golden-hour-getaway/794727127_122107321791451480_5518800135228518121_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-3-golden-hour-getaway/795255516_122107321725451480_2206251137710504268_n.jpg" alt="" loading="lazy" class="">
-          </div>
+        <div class="slideshow" data-interval="4600">
+          <img src="assets/warped/golden-hour-getaway/slot1_0.png" alt="" loading="lazy" class="active">
+          <img src="assets/warped/golden-hour-getaway/slot1_1.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/golden-hour-getaway/slot1_2.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/golden-hour-getaway/slot1_3.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/golden-hour-getaway/slot1_4.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/golden-hour-getaway/slot1_5.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/golden-hour-getaway/slot1_6.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/golden-hour-getaway/slot1_7.png" alt="" loading="lazy" class="">
         </div>
         </div>
       </div>
@@ -331,19 +312,15 @@
           <h2>Little Ones</h2>
         </div>
         <div class="photo-layer">
-        <div class="photo-slot" style="top:18.00%; left:26.00%; width:22.00%; height:50.00%; clip-path: polygon(0.0% 8.0%, 90.9% 0.0%, 100.0% 92.0%, 9.1% 100.0%); -webkit-clip-path: polygon(0.0% 8.0%, 90.9% 0.0%, 100.0% 92.0%, 9.1% 100.0%);">
-          <div class="slideshow" data-interval="4200">
-          <img src="assets/album-4-little-ones/778958314_122099625261451480_4724982078963170509_n.jpg" alt="" loading="lazy" class="active">
-          <img src="assets/album-4-little-ones/778984909_122099625315451480_2069245050605588485_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-4-little-ones/778985121_122099625279451480_8890131504236513413_n.jpg" alt="" loading="lazy" class="">
-          </div>
+        <div class="slideshow" data-interval="4200">
+          <img src="assets/warped/little-ones/slot0_0.png" alt="" loading="lazy" class="active">
+          <img src="assets/warped/little-ones/slot0_1.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/little-ones/slot0_2.png" alt="" loading="lazy" class="">
         </div>
-        <div class="photo-slot" style="top:33.00%; left:51.00%; width:25.00%; height:55.00%; clip-path: polygon(0.0% 10.9%, 88.0% 0.0%, 100.0% 70.9%, 20.0% 100.0%); -webkit-clip-path: polygon(0.0% 10.9%, 88.0% 0.0%, 100.0% 70.9%, 20.0% 100.0%);">
-          <div class="slideshow" data-interval="4200">
-          <img src="assets/album-4-little-ones/778972249_122099625297451480_8079684821329602940_n.jpg" alt="" loading="lazy" class="active">
-          <img src="assets/album-4-little-ones/778984910_122099625357451480_3181054740727286376_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-4-little-ones/778985497_122099625243451480_1886478121536283393_n.jpg" alt="" loading="lazy" class="">
-          </div>
+        <div class="slideshow" data-interval="4600">
+          <img src="assets/warped/little-ones/slot1_0.png" alt="" loading="lazy" class="active">
+          <img src="assets/warped/little-ones/slot1_1.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/little-ones/slot1_2.png" alt="" loading="lazy" class="">
         </div>
         </div>
       </div>
@@ -358,13 +335,11 @@
           <h2>Field &amp; Film</h2>
         </div>
         <div class="photo-layer">
-        <div class="photo-slot" style="top:31.00%; left:37.00%; width:19.00%; height:46.00%; clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%); -webkit-clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%);">
-          <div class="slideshow" data-interval="4200">
-          <img src="assets/album-5-field-and-film/777327786_122098246401451480_6075400341026326803_n.jpg" alt="" loading="lazy" class="active">
-          <img src="assets/album-5-field-and-film/777851651_122098246467451480_7832920152327509645_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-5-field-and-film/778767412_122098246335451480_2255458230638356593_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-5-field-and-film/783076071_122098246551451480_2182316011278896207_n.jpg" alt="" loading="lazy" class="">
-          </div>
+        <div class="slideshow" data-interval="4200">
+          <img src="assets/warped/field-and-film/slot0_0.png" alt="" loading="lazy" class="active">
+          <img src="assets/warped/field-and-film/slot0_1.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/field-and-film/slot0_2.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/field-and-film/slot0_3.png" alt="" loading="lazy" class="">
         </div>
         </div>
       </div>
@@ -379,35 +354,23 @@
           <h2>Girls' Trip</h2>
         </div>
         <div class="photo-layer">
-        <div class="photo-slot" style="top:9.00%; left:69.00%; width:31.00%; height:23.00%; clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%); -webkit-clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%);">
-          <div class="slideshow" data-interval="4200">
-          <img src="assets/album-7-girls-trip/787945643_122105664345451480_8123523244715151164_n.jpg" alt="" loading="lazy" class="active">
-          </div>
+        <div class="slideshow" data-interval="4200">
+          <img src="assets/warped/girls-trip/slot0_0.png" alt="" loading="lazy" class="active">
         </div>
-        <div class="photo-slot" style="top:31.00%; left:34.00%; width:31.00%; height:23.00%; clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%); -webkit-clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%);">
-          <div class="slideshow" data-interval="4200">
-          <img src="assets/album-7-girls-trip/788780816_122105664321451480_389338297174495276_n.jpg" alt="" loading="lazy" class="active">
-          </div>
+        <div class="slideshow" data-interval="4600">
+          <img src="assets/warped/girls-trip/slot1_0.png" alt="" loading="lazy" class="active">
         </div>
-        <div class="photo-slot" style="top:53.00%; left:0.00%; width:32.00%; height:26.00%; clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%); -webkit-clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%);">
-          <div class="slideshow" data-interval="4200">
-          <img src="assets/album-7-girls-trip/788881208_122105664405451480_2890345098055297511_n.jpg" alt="" loading="lazy" class="active">
-          </div>
+        <div class="slideshow" data-interval="5000">
+          <img src="assets/warped/girls-trip/slot2_0.png" alt="" loading="lazy" class="active">
         </div>
-        <div class="photo-slot" style="top:50.00%; left:69.00%; width:31.00%; height:29.00%; clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%); -webkit-clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%);">
-          <div class="slideshow" data-interval="4200">
-          <img src="assets/album-7-girls-trip/789427927_122105664375451480_65262240914419825_n.jpg" alt="" loading="lazy" class="active">
-          </div>
+        <div class="slideshow" data-interval="5400">
+          <img src="assets/warped/girls-trip/slot3_0.png" alt="" loading="lazy" class="active">
         </div>
-        <div class="photo-slot" style="top:74.00%; left:33.00%; width:32.00%; height:25.00%; clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%); -webkit-clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%);">
-          <div class="slideshow" data-interval="4200">
-          <img src="assets/album-7-girls-trip/790444393_122105664309451480_6628982807809641420_n.jpg" alt="" loading="lazy" class="active">
-          </div>
+        <div class="slideshow" data-interval="5800">
+          <img src="assets/warped/girls-trip/slot4_0.png" alt="" loading="lazy" class="active">
         </div>
-        <div class="photo-slot" style="top:73.00%; left:69.00%; width:31.00%; height:26.00%; clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%); -webkit-clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%);">
-          <div class="slideshow" data-interval="4200">
-          <img src="assets/album-7-girls-trip/791626083_122105664363451480_3796436320697910259_n.jpg" alt="" loading="lazy" class="active">
-          </div>
+        <div class="slideshow" data-interval="6200">
+          <img src="assets/warped/girls-trip/slot5_0.png" alt="" loading="lazy" class="active">
         </div>
         </div>
       </div>
@@ -422,14 +385,12 @@
           <h2>Golden Hour Moments</h2>
         </div>
         <div class="photo-layer">
-        <div class="photo-slot" style="top:27.00%; left:15.00%; width:71.00%; height:44.00%; clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%); -webkit-clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%);">
-          <div class="slideshow" data-interval="4200">
-          <img src="assets/album-8-golden-hour-moments/778984959_122101346175451480_9066227021113730493_n.jpg" alt="" loading="lazy" class="active">
-          <img src="assets/album-8-golden-hour-moments/778985027_122101346133451480_8205827404473873589_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-8-golden-hour-moments/778985102_122101346187451480_5084979933606378852_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-8-golden-hour-moments/801670022_122109592479451480_376197251360339035_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-8-golden-hour-moments/801928221_122109592473451480_1463145216812732572_n.jpg" alt="" loading="lazy" class="">
-          </div>
+        <div class="slideshow" data-interval="4200">
+          <img src="assets/warped/golden-hour-moments/slot0_0.png" alt="" loading="lazy" class="active">
+          <img src="assets/warped/golden-hour-moments/slot0_1.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/golden-hour-moments/slot0_2.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/golden-hour-moments/slot0_3.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/golden-hour-moments/slot0_4.png" alt="" loading="lazy" class="">
         </div>
         </div>
       </div>
@@ -444,15 +405,13 @@
           <h2>Puppy Love</h2>
         </div>
         <div class="photo-layer">
-        <div class="photo-slot" style="top:17.00%; left:21.00%; width:59.00%; height:64.00%; clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%); -webkit-clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%);">
-          <div class="slideshow" data-interval="4200">
-          <img src="assets/album-6-young-love/778972524_122100633855451480_6367178767847969997_n.jpg" alt="" loading="lazy" class="active">
-          <img src="assets/album-6-young-love/778972536_122100633897451480_1866189778963704501_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-6-young-love/778984937_122100633873451480_1431098755898984762_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-6-young-love/778985087_122100633945451480_1682556066460598449_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-6-young-love/778985300_122100633801451480_5679755412992875710_n.jpg" alt="" loading="lazy" class="">
-          <img src="assets/album-6-young-love/778985369_122100633813451480_5949952575341967954_n.jpg" alt="" loading="lazy" class="">
-          </div>
+        <div class="slideshow" data-interval="4200">
+          <img src="assets/warped/puppy-love/slot0_0.png" alt="" loading="lazy" class="active">
+          <img src="assets/warped/puppy-love/slot0_1.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/puppy-love/slot0_2.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/puppy-love/slot0_3.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/puppy-love/slot0_4.png" alt="" loading="lazy" class="">
+          <img src="assets/warped/puppy-love/slot0_5.png" alt="" loading="lazy" class="">
         </div>
         </div>
       </div>
@@ -513,9 +472,6 @@
     }, 3200);
   })();
 
-  // Position .photo-layer to exactly match the rendered (letterboxed) box of .scene-bg
-  // under object-fit:contain -- this is the real fix: percentages inside .photo-layer
-  // now always land on the actual image pixels, at any viewport size/aspect ratio.
   function layoutSceneLayers() {
     document.querySelectorAll('.scene-wrap').forEach(function(wrap) {
       var layer = wrap.querySelector('.photo-layer');
