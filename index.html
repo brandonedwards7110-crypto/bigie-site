@@ -130,6 +130,18 @@
   .venture:nth-child(4n+2) { --card-accent: var(--brick); }
   .venture:nth-child(4n+3) { --card-accent: #c97b8a; }
   .venture:nth-child(4n+4) { --card-accent: #c98a3a; }
+  /* Tekton by Bigie's card, explicit exception to this file's own "photo is
+     atmosphere, every venture box is real CSS" rule above — Bigie's direct
+     ask (2026-09-24): the tile itself should show the new site's own hero
+     image, not just text. Gradient keeps the name/sub/status legible over
+     whatever's underneath without a flat scrim hiding the photo entirely. */
+  .venture.has-photo {
+    background-image: linear-gradient(180deg, rgba(10,13,18,0.12) 0%, rgba(10,13,18,0.55) 62%, rgba(10,13,18,0.92) 100%), url('assets/tekton-by-bigie.jpg');
+    background-size: cover; background-position: center; justify-content: flex-end;
+  }
+  .venture.has-photo:hover, .venture.has-photo:focus-visible {
+    background-image: linear-gradient(180deg, rgba(10,13,18,0.05) 0%, rgba(10,13,18,0.45) 62%, rgba(10,13,18,0.88) 100%), url('assets/tekton-by-bigie.jpg');
+  }
   .venture-name {
     font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: 1.15rem;
   }
@@ -184,7 +196,7 @@
   <a href="https://app.bigie.us/">Bigie</a>
   <a href="https://lite.bigie.us/">Bigie Lite</a>
   <a href="https://carriders.org/">Car Riders</a>
-  <a href="/web-design/">Web Design</a>
+  <a href="/web-design/tekton-by-bigie/draft/">Tekton by Bigie (Web Design)</a>
   <span class="soon">Bigie's Marketplace <span>Soon</span></span>
   <div class="menu-submenu">
     <div class="menu-submenu-label">Clients</div>
@@ -210,9 +222,9 @@
       <div class="venture-sub">The lightweight, always-on version</div>
       <div class="venture-status">Live</div>
     </a>
-    <a class="venture" href="/web-design/" aria-label="Web Design — real sites, built">
-      <div class="venture-name">Web Design</div>
-      <div class="venture-sub">Real sites, built for real businesses</div>
+    <a class="venture has-photo" href="/web-design/tekton-by-bigie/draft/" aria-label="Tekton by Bigie — real sites, built">
+      <div class="venture-name">Tekton by Bigie</div>
+      <div class="venture-sub">(Web Design) — Real sites, built for real businesses</div>
       <div class="venture-status">Live</div>
     </a>
     <a class="venture" href="https://carriders.org/" aria-label="Car Riders — school pickup">
