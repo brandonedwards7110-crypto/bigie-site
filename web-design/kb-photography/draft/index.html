@@ -100,6 +100,10 @@
   }
   .scene-wrap { position: absolute; inset: 0; width: 100%; height: 100%; }
   .scene-bg-blur { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: blur(40px) brightness(0.7) saturate(1.1); transform: scale(1.15); }
+  /* .photo-layer is sized/positioned by JS to exactly match the rendered (letterboxed) box of
+     .scene-bg under object-fit:contain -- every .photo-slot percentage is relative to THIS,
+     not to .scene-wrap, so overlays land on the real image regardless of viewport aspect ratio */
+  .photo-layer { position: absolute; }
   .scene-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; }
   .photo-slot { position: absolute; overflow: hidden; }
   .slideshow { position: relative; width: 100%; height: 100%; }
@@ -217,13 +221,14 @@
 
 
     <section class="album-slide" id="family-reunion">
-      <div class="scene-wrap" style="aspect-ratio: 1588/2380;">
+      <div class="scene-wrap" data-scene-w="1588" data-scene-h="2380">
         <img class="scene-bg-blur" src="assets/scenes_clean/family-reunion-triptych.webp" alt="" aria-hidden="true">
         <img class="scene-bg" src="assets/scenes_clean/family-reunion-triptych.webp" alt="">
         <div class="on-image-title" style="top: calc(6% + var(--nav-h) + 8px); left:50%;">
           <div class="plaque-tag">FAMILY • 30A</div>
           <h2>Family Reunion</h2>
         </div>
+        <div class="photo-layer">
         <div class="photo-slot" style="top:25.00%; left:6.00%; width:26.00%; height:38.00%; clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%); -webkit-clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%);">
           <div class="slideshow span-group" data-interval="4200" data-group="family-reunion">
           <img src="assets/album-1-family-reunion/819088102_122113359015451480_5839750649866410113_n.jpg" alt="" loading="lazy" class="active">
@@ -248,17 +253,19 @@
           <img src="assets/album-1-family-reunion/823587997_122113359033451480_6305688981443454949_n.jpg" alt="" loading="lazy" class="">
           </div>
         </div>
+        </div>
       </div>
     </section>
 
     <section class="album-slide" id="the-proposal">
-      <div class="scene-wrap" style="aspect-ratio: 533/652;">
+      <div class="scene-wrap" data-scene-w="533" data-scene-h="652">
         <img class="scene-bg-blur" src="assets/scenes_clean/the-proposal.jpg" alt="" aria-hidden="true">
         <img class="scene-bg" src="assets/scenes_clean/the-proposal.jpg" alt="">
         <div class="on-image-title" style="top: calc(4% + var(--nav-h) + 8px); left:50%;">
           <div class="plaque-tag">ENGAGEMENT • BEACH</div>
           <h2>The Proposal</h2>
         </div>
+        <div class="photo-layer">
         <div class="photo-slot" style="top:16.00%; left:25.00%; width:50.00%; height:29.00%; clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%); -webkit-clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%);">
           <div class="slideshow" data-interval="4200">
           <img src="assets/album-2-the-proposal/797684833_122110933575451480_7108655423646406356_n.jpg" alt="" loading="lazy" class="active">
@@ -273,17 +280,19 @@
           <img src="assets/album-2-the-proposal/811170793_122110933635451480_704184884067746695_n.jpg" alt="" loading="lazy" class="">
           </div>
         </div>
+        </div>
       </div>
     </section>
 
     <section class="album-slide" id="golden-hour-getaway">
-      <div class="scene-wrap" style="aspect-ratio: 1588/1271;">
+      <div class="scene-wrap" data-scene-w="1588" data-scene-h="1271">
         <img class="scene-bg-blur" src="assets/scenes_clean/golden-hour-getaway.webp" alt="" aria-hidden="true">
         <img class="scene-bg" src="assets/scenes_clean/golden-hour-getaway.webp" alt="">
         <div class="on-image-title" style="top: calc(4% + var(--nav-h) + 8px); left:50%;">
           <div class="plaque-tag">FRIENDS • RESORT</div>
           <h2>Golden Hour Getaway</h2>
         </div>
+        <div class="photo-layer">
         <div class="photo-slot" style="top:24.00%; left:13.00%; width:31.00%; height:66.00%; clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%); -webkit-clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%);">
           <div class="slideshow" data-interval="4200">
           <img src="assets/album-3-golden-hour-getaway/787945643_122105369763451480_5338609462511727302_n.jpg" alt="" loading="lazy" class="active">
@@ -309,17 +318,19 @@
           <img src="assets/album-3-golden-hour-getaway/795255516_122107321725451480_2206251137710504268_n.jpg" alt="" loading="lazy" class="">
           </div>
         </div>
+        </div>
       </div>
     </section>
 
     <section class="album-slide" id="little-ones">
-      <div class="scene-wrap" style="aspect-ratio: 2255/1809;">
+      <div class="scene-wrap" data-scene-w="2255" data-scene-h="1809">
         <img class="scene-bg-blur" src="assets/scenes_clean/little-ones.webp" alt="" aria-hidden="true">
         <img class="scene-bg" src="assets/scenes_clean/little-ones.webp" alt="">
         <div class="on-image-title" style="top: calc(4% + var(--nav-h) + 8px); left:50%;">
           <div class="plaque-tag">NEWBORN • SIBLINGS</div>
           <h2>Little Ones</h2>
         </div>
+        <div class="photo-layer">
         <div class="photo-slot" style="top:25.00%; left:28.00%; width:19.00%; height:38.00%; clip-path: polygon(0.0% 5.3%, 94.7% 0.0%, 100.0% 100.0%, 5.3% 94.7%); -webkit-clip-path: polygon(0.0% 5.3%, 94.7% 0.0%, 100.0% 100.0%, 5.3% 94.7%);">
           <div class="slideshow" data-interval="4200">
           <img src="assets/album-4-little-ones/778958314_122099625261451480_4724982078963170509_n.jpg" alt="" loading="lazy" class="active">
@@ -334,17 +345,19 @@
           <img src="assets/album-4-little-ones/778985497_122099625243451480_1886478121536283393_n.jpg" alt="" loading="lazy" class="">
           </div>
         </div>
+        </div>
       </div>
     </section>
 
     <section class="album-slide" id="field-and-film">
-      <div class="scene-wrap" style="aspect-ratio: 1800/1200;">
+      <div class="scene-wrap" data-scene-w="1800" data-scene-h="1200">
         <img class="scene-bg-blur" src="assets/scenes_clean/field-and-film.jpg" alt="" aria-hidden="true">
         <img class="scene-bg" src="assets/scenes_clean/field-and-film.jpg" alt="">
         <div class="on-image-title" style="top: calc(3% + var(--nav-h) + 8px); left:50%;">
           <div class="plaque-tag">COUPLES • BLACK &amp; WHITE</div>
           <h2>Field &amp; Film</h2>
         </div>
+        <div class="photo-layer">
         <div class="photo-slot" style="top:31.00%; left:37.00%; width:19.00%; height:46.00%; clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%); -webkit-clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%);">
           <div class="slideshow" data-interval="4200">
           <img src="assets/album-5-field-and-film/777327786_122098246401451480_6075400341026326803_n.jpg" alt="" loading="lazy" class="active">
@@ -353,17 +366,19 @@
           <img src="assets/album-5-field-and-film/783076071_122098246551451480_2182316011278896207_n.jpg" alt="" loading="lazy" class="">
           </div>
         </div>
+        </div>
       </div>
     </section>
 
     <section class="album-slide" id="girls-trip">
-      <div class="scene-wrap" style="aspect-ratio: 1200/1881;">
+      <div class="scene-wrap" data-scene-w="1200" data-scene-h="1881">
         <img class="scene-bg-blur" src="assets/scenes_clean/girls-trip.webp" alt="" aria-hidden="true">
         <img class="scene-bg" src="assets/scenes_clean/girls-trip.webp" alt="">
         <div class="on-image-title" style="top: calc(3% + var(--nav-h) + 8px); left:50%;">
           <div class="plaque-tag">FRIENDS • 30A</div>
           <h2>Girls' Trip</h2>
         </div>
+        <div class="photo-layer">
         <div class="photo-slot" style="top:9.00%; left:69.00%; width:31.00%; height:23.00%; clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%); -webkit-clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%);">
           <div class="slideshow" data-interval="4200">
           <img src="assets/album-7-girls-trip/787945643_122105664345451480_8123523244715151164_n.jpg" alt="" loading="lazy" class="active">
@@ -394,17 +409,19 @@
           <img src="assets/album-7-girls-trip/791626083_122105664363451480_3796436320697910259_n.jpg" alt="" loading="lazy" class="active">
           </div>
         </div>
+        </div>
       </div>
     </section>
 
     <section class="album-slide" id="golden-hour-moments">
-      <div class="scene-wrap" style="aspect-ratio: 1588/1588;">
+      <div class="scene-wrap" data-scene-w="1588" data-scene-h="1588">
         <img class="scene-bg-blur" src="assets/scenes_clean/golden-hour-moments.webp" alt="" aria-hidden="true">
         <img class="scene-bg" src="assets/scenes_clean/golden-hour-moments.webp" alt="">
         <div class="on-image-title" style="top: calc(4% + var(--nav-h) + 8px); left:50%;">
           <div class="plaque-tag">PORTRAITS • GULF COAST</div>
           <h2>Golden Hour Moments</h2>
         </div>
+        <div class="photo-layer">
         <div class="photo-slot" style="top:27.00%; left:15.00%; width:71.00%; height:44.00%; clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%); -webkit-clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%);">
           <div class="slideshow" data-interval="4200">
           <img src="assets/album-8-golden-hour-moments/778984959_122101346175451480_9066227021113730493_n.jpg" alt="" loading="lazy" class="active">
@@ -414,17 +431,19 @@
           <img src="assets/album-8-golden-hour-moments/801928221_122109592473451480_1463145216812732572_n.jpg" alt="" loading="lazy" class="">
           </div>
         </div>
+        </div>
       </div>
     </section>
 
     <section class="album-slide" id="puppy-love">
-      <div class="scene-wrap" style="aspect-ratio: 1588/1057;">
+      <div class="scene-wrap" data-scene-w="1588" data-scene-h="1057">
         <img class="scene-bg-blur" src="assets/scenes_clean/puppy-love.webp" alt="" aria-hidden="true">
         <img class="scene-bg" src="assets/scenes_clean/puppy-love.webp" alt="">
         <div class="on-image-title" style="top: calc(3% + var(--nav-h) + 8px); left:50%;">
           <div class="plaque-tag">COUPLES • PORTRAITS</div>
           <h2>Puppy Love</h2>
         </div>
+        <div class="photo-layer">
         <div class="photo-slot" style="top:17.00%; left:21.00%; width:59.00%; height:64.00%; clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%); -webkit-clip-path: polygon(0.0% 0.0%, 100.0% 0.0%, 100.0% 100.0%, 0.0% 100.0%);">
           <div class="slideshow" data-interval="4200">
           <img src="assets/album-6-young-love/778972524_122100633855451480_6367178767847969997_n.jpg" alt="" loading="lazy" class="active">
@@ -434,6 +453,7 @@
           <img src="assets/album-6-young-love/778985300_122100633801451480_5679755412992875710_n.jpg" alt="" loading="lazy" class="">
           <img src="assets/album-6-young-love/778985369_122100633813451480_5949952575341967954_n.jpg" alt="" loading="lazy" class="">
           </div>
+        </div>
         </div>
       </div>
     </section>
@@ -492,6 +512,30 @@
       imgs[i].classList.add('active');
     }, 3200);
   })();
+
+  // Position .photo-layer to exactly match the rendered (letterboxed) box of .scene-bg
+  // under object-fit:contain -- this is the real fix: percentages inside .photo-layer
+  // now always land on the actual image pixels, at any viewport size/aspect ratio.
+  function layoutSceneLayers() {
+    document.querySelectorAll('.scene-wrap').forEach(function(wrap) {
+      var layer = wrap.querySelector('.photo-layer');
+      if (!layer) return;
+      var iw = parseFloat(wrap.getAttribute('data-scene-w'));
+      var ih = parseFloat(wrap.getAttribute('data-scene-h'));
+      var cw = wrap.clientWidth, ch = wrap.clientHeight;
+      if (!iw || !ih || !cw || !ch) return;
+      var scale = Math.min(cw / iw, ch / ih);
+      var rw = iw * scale, rh = ih * scale;
+      layer.style.left = ((cw - rw) / 2) + 'px';
+      layer.style.top = ((ch - rh) / 2) + 'px';
+      layer.style.width = rw + 'px';
+      layer.style.height = rh + 'px';
+    });
+  }
+  window.addEventListener('load', layoutSceneLayers);
+  window.addEventListener('resize', layoutSceneLayers);
+  layoutSceneLayers();
+  setTimeout(layoutSceneLayers, 300);
 
   document.querySelectorAll('.slideshow:not(.span-group)').forEach(function(box) {
     var imgs = box.querySelectorAll('img');
